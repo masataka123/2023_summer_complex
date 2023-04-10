@@ -1,0 +1,916 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+\usepackage[dvipdfmx]{hyperref}
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{S}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+\newtheorem{dfnthm}[thm]{定義・定理}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+\title{複素解析ノート}
+\author{岩井雅崇 (大阪大学)}
+\date{\today \, ver 1.00}
+%ここから本文．
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\section{}
+
+
+
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[正則関数]
+領域$\Omega \subset \C$上の複素数値関数$f : \Omega \rightarrow \C$が$\Omega$で正則であるとは, 任意の$a \in \C$について
+$$\lim_{h\rightarrow 0} \frac{f(a+h) - f(a)}{h}$$
+が存在すること. この極限値を$f'(a)$とかく.
+    \end{dfn}
+    \end{tcolorbox}
+    
+      \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[コーシーの積分定理]
+円盤$D \subset \C$上の正則関数$f : D\rightarrow \C$と$D$内の(区分的滑らかな)閉曲線$C$に対して
+$$\int_{C}f(z) dz =0$$
+    \end{thm}
+    \end{tcolorbox}
+    
+       \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[コーシーの積分公式]
+領域$\Omega \subset \C$上の正則関数$f : \Omega \rightarrow \C$と$\bar{D} \subset \Omega$となる円盤$D$に対して, 任意の$a \in D$について
+$$f(a) = \frac{1}{2 \pi i} \int_{\partial D} \frac{f(z)}{z - a} dz$$
+    \end{thm}
+    \end{tcolorbox}
+  証明は半径$\epsilon$の円盤に帰着させて計算を行う
+
+       \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[コーシー型の積分の正則性]
+円盤$D \subset \C$とし, 連続関数$\varphi : \partial D \rightarrow \C$とする. このとき
+$$\int_{C}f(z) =  \int_{\partial D} \frac{ \varphi ( \xi)}{\xi - z } d\xi$$
+は$D$上で正則であり, 
+$$
+f'(z) =  \int_{\partial D} \frac{ \varphi ( \xi)}{(\xi - z)^2 } d\xi
+$$
+    \end{thm}
+    \end{tcolorbox}
+    
+    \section{}
+
+         \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[コーシーの積分公式の応用]
+領域$\Omega \subset \C$上の正則関数$f : \Omega \rightarrow \C$と$\bar{D} \subset \Omega$となる円盤$D$に対して, 任意の$a \in D$について
+$$
+f'(a) = \frac{1}{2 \pi i} \int_{\partial D} \frac{f(z)}{(z - a)^2} dz
+$$
+もっと一般に任意の自然数$n$について
+$$
+f^{(n)}(a) = \frac{n !}{2 \pi i} \int_{\partial D} \frac{f(z)}{(z - a)^{n+1}} dz
+$$
+    \end{thm}
+    \end{tcolorbox}
+    
+          \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[リウヴィユの定理]
+$\C$上の有界正則関数は定数である. 
+    \end{thm}
+    \end{tcolorbox}
+
+          \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[積分記号下の微分]
+    領域$\Omega \subset \C$, 区分的滑らかな曲線$C\subset \C$, 
+連続関数$f (z, \xi): \Omega \times C \rightarrow \C$とする.
+$\xi \in C$を固定すると$f(z, \xi)$は$\Omega$上で正則であるとする.
+このとき
+$$
+G(z) =  \int_{C} f(z, \xi)d\xi
+$$
+は$\Omega$上で正則であり
+$$
+\drv{G(z)}{z}= \int_{C} \pdrv{f}{z}(z, \xi)d\xi
+$$
+    \end{thm}
+    \end{tcolorbox}
+証明は$f(z,\xi)$を積分の形で書いて, 累次積分の順序交換を行う(順序交換できるのは積分する範囲をコンパクトにとれるから.)
+
+\section{}
+
+          \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ワイエルシュトラスの二重級数定理]
+$\{ f_{n}\}_{n=1}^{\infty}$を領域$\Omega \subset \C$上の正則関数列とし, $f$を$\Omega$上の関数とする.
+$\Omega$の任意のコンパクト集合上で$\{ f_{n}\}_{n=1}^{\infty}$が$f$に一様収束するとき(つまり広義一様収束するとき), $f$は$\Omega$上で正則であり, $\{ f^{'}_{n}\}_{n=1}^{\infty}$は$\Omega$の任意のコンパクト集合上で$f'$に収束する. 
+    \end{thm}
+    \end{tcolorbox}
+    
+証明は$f_n(a) = \frac{1}{2 \pi i} \int_{\partial D} \frac{f_n(z)}{z - a} dz$であり $\frac{f_n(z)}{z - a}$は$\frac{f(z)}{z - a}$に広義一様収束するので, 極限と積分の順序交換から$f(a) = \frac{1}{2 \pi i} \int_{\partial D} \frac{f(z)}{z - a} dz$となり正則がいえる.
+    
+          \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ワイエルシュトラスのM判定法]
+$\{ f_{n}\}_{n=1}^{\infty}$を集合$\Omega \subset \C$上の関数列とする.
+正の数の列$\{M_{n}\}_{n=1}^{\infty}$が次の二つを満たすとする.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item 任意の$z \in K$について$|f_{n}(z)| \le M_n$が成り立つ.
+\item $\sum_{n=1}^{\infty} M_{n}$は収束する.
+\end{enumerate}
+このとき$\sum_{n=1}^{\infty} f_{n}(z)$は$K$上で絶対かつ一様に収束する.
+    \end{thm}
+    \end{tcolorbox}
+        
+  \section{}
+  
+  
+  \begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[ベキ級数]　
+  $a \in \C$について
+$$
+f(z) = \sum_{n=0}^{\infty}c_n (z -a)^{n} = c_0 + c_1( z - a) + c_2(z -a)^2 + \cdots
+$$
+と表せられる関数を\underline{ベキ級数}という.
+    \end{dfn}
+    \end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+ベキ級数$f(z) = \sum_{n=0}^{\infty}c_n (z -a)$が$\alpha \neq a$で収束すると仮定する．
+$R = |\alpha - a|$とし$D = \{ z\in \C | |z  - a| < R \}$とする.
+このとき$D$上の任意のコンパクト集合で$f(z)$は一様収束し, $f(z)$は$D$上で正則で
+$$
+f'(z) =  \sum_{n=0}^{\infty}n c_n (z -a)^{n-1}
+$$
+    \end{thm}
+\end{tcolorbox}
+証明は仮定から$c_n < \frac{A}{R^{n}}$となる$A>0$が取れるのでワイエルシュトラスのM判定法と二重級数定理が言える.
+        
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+ベキ級数$f(z) = \sum_{n=0}^{\infty}c_n (z -a)$が$\alpha \neq a$で収束すると仮定する．
+$R = |\alpha - a|$とし$D = \{ z\in \C | |z  - a| < R \}$とする.
+このとき$D$上の任意のコンパクト集合で$f(z)$は一様収束し, $f(z)$は$D$上で正則で
+$$
+f'(z) =  \sum_{n=0}^{\infty}n c_n (z -a)^{n-1}
+$$
+    \end{thm}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$\C$上の領域$D$上の正則関数は$a \in D$について, $\{ |z - a| < d(a, \partial D)\}$上で
+$f(z)=\sum_{n=0}^{\infty}a_n(z - a)^{n}$
+とテイラー展開され, 収束半径は$d(a, \partial D)$以上である. 
+特に解析的(ベキ級数展開可能)である.
+また$r < d(a, \partial D)$を一つ取ると
+$$
+a_n = \frac{1}{2 \pi i}\int_{|z - a| <r}\frac{f(z)}{(z-a)^{n+1}} dz \text{である.}
+$$
+    \end{thm}
+\end{tcolorbox} 
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ローラン展開]
+$a \in \C$, $0 \le r_1 < r_2 \le + \infty$について$R(a, r_1, r_2):=\{ z \in \C | r_1 < |z - a|  < r_2 \}$とおく.
+$R(a, r_1, r_2)$上の正則関数$f$について, $R(a, r_1, r_2)$上で
+$$
+f(z) = \sum_{n=-\infty}^{n=\infty} a_n (z - a)^{n}
+$$
+と展開できる(そして右の級数は絶対かつ一様に収束する.)
+    \end{thm}
+\end{tcolorbox} 
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$R(a,0,r_2)$上でのローラン展開$f(z) = \sum_{n=-\infty}^{n=\infty} a_n (z - a)^{n}$について$a_n \neq 0$なる$n <0$が無限個あるとき, $a$を$f$の孤立真性特異点という. 
+
+$a_n \neq 0$なる$n<0$が有限個しかないとき
+$$
+f(z) = \frac{a_{-m}}{(z - a)^{m}} + \frac{a_{-m+1}}{(z - a)^{m-1}} + \cdots
+$$
+とかける. $m>0$のとき$a$は位数$m$の極であるという. 
+
+$a_n \neq 0$なる$n<0$がない場合, 
+$$
+f(z) = \frac{a_{m}}{(z - a)^{m}} + \frac{a_{m+1}}{(z - a)^{m+1}} + \cdots
+$$
+とかける. このとき$a$は位数$m$の極であるという. 
+
+また$a = \infty$のローラン展開などは$f(\frac{1}{w})$の$w=0$の場合のものとして考える.
+    \end{dfn}
+    
+\end{tcolorbox} 
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[有理型関数]
+リーマン球面$\hat{C}$上の領域$D$について$f$が任意の$a \in D$でたかだか極しか
+持たない関数を$D$上の有理型関数という. 
+    \end{dfn}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[有理型関数]
+リーマン球面$\hat{C}$上の領域$D$とし, $f$を$D$上の有理型関数とする. 
+$a \in D \cap \C$について$f$の$a$での留数を
+$$
+Res(a: f) = a_{-1} = \frac{1}{2 \pi i}\int_{|z-a|< \epsilon} f(z) dz
+$$
+とし, $a=\infty $の場合は
+$$
+Res(\infty: f) = -a_{-1} = \frac{1}{2 \pi i}\int_{|z-a|< \epsilon} f(\frac{1}{w}) \frac{dw}{w^2}  \text{とする.}
+$$
+    \end{dfn}
+\end{tcolorbox} 
+　留数の定義に関しては$\omega = f(z) dz$とするとし$Res(\infty: \omega)= \frac{1}{2 \pi i}\int_{|z-a|< \epsilon} \omega$と定義していると思って良い.
+$a \in D $について$f$が$a$で$m$位の極を持つとき
+    $$
+    Res(a : f) = \frac{1}{(m-1)!}\drv{^{m-1}}{z^{m-1}}|_{z=a} (z - a)^m f(z) .
+    $$
+    ともかける.
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[留数定理]
+    $\C$上の領域$D$とし, $f$を$D$上の有理型関数とする. さらに$C = \partial D$は区分的滑らかな閉曲線とする.
+    このとき
+    $$
+    \frac{1}{2 \pi i}\int_{C} f(z) dz = \sum_{a \in D} Res(a : f).
+     $$
+    \end{thm}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[偏角の原理]
+    $\C$上の領域$D$とし, $f$を$D$上の有理型関数とする. さらに$C = \partial D$は区分的滑らかな閉曲線とする.
+$a \in D$について$m_a$を$f$の0点の位数, $n_a$を極の位数とすると
+    $$
+    \frac{1}{2 \pi i}\int_{C} \frac{f'(z)}{f(z)} dz = \sum_{a \in D}m_{a} - \sum_{a \in D}n_{a}. 
+     $$
+    \end{thm}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $$
+    F(z) = \sum_{n=-\infty}^{\infty} \frac{1}{(z - n \pi)^2}, G(z) =  \frac{1}{(\sin z)^2}
+    $$
+    とすると, $F(z), G(z)$ともに$\C$上の有理型関数で次を満たす.    
+   \begin{enumerate}
+   \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+   \item $F(z + \pi)=F(z)$
+   \item $z =0$の近くで$F(z) = \frac{1}{z^2} + (\text{正則関数})$
+   \item $F(z)$の極は$z=n \pi$ ($n$は整数)だけである.
+   \item $|Im z| \rightarrow \infty$のとき$|F(z)| \rightarrow 0$.
+   \end{enumerate}
+    \end{thm}
+\end{tcolorbox} 
+
+\section{}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$$
+ \sum_{n=-\infty}^{\infty} \frac{1}{(z - n \pi)^2}  =  \frac{1}{(\sin z)^2}
+$$
+特に$z=0$の周りのテイラー展開を見ると
+$$
+ \sum_{n=1}^{\infty} \frac{1}{n^2}  =  \frac{\pi^2}{6}
+$$
+    \end{thm}
+\end{tcolorbox} 
+証明は$ \sum_{n=-\infty}^{\infty} \frac{1}{(z - n \pi)^2}  - \frac{1}{(\sin z)^2}$が有界正則関数であることを示す.
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[楕円関数]
+    $\omega_{1}, \omega_{2} \in \C \setminus \{ 0\}$を$\frac{\omega_{2}}{\omega_{1}} \not \in \R$となるようにとる. 任意の$m,n \in \Z$について
+    $$
+    f(z + m\omega_{1} + n \omega_{2}) = f(z)
+    $$
+    となる$\C$上の有理型関数$f$を\underline{周期$\omega_{1}, \omega_{2}$を持つ楕円関数}という.
+    
+    $\alpha \in \C$について
+    $$
+    \Omega = \{\alpha + x \omega_1 + y \omega_2 | 0 \le x < 1, o \le y < 1 \}
+    $$
+    を周期平行四辺形と呼ぶ.
+    \end{dfn}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+定数でない楕円関数は必ず極を持つ.
+    \end{thm}
+\end{tcolorbox} 
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+定数でない楕円関数$f(z)$と境界上に$f(z)$の極を持たない周期平行四辺形$\Omega$とする. $\Omega$内での$f(z)$の極での留数の和は0である.
+    \end{thm}
+\end{tcolorbox} 
+証明は留数定理から$ \sum_{a \in \Omega} Res(a : f) = \frac{1}{2 \pi i}\int_{\partial \Omega} f(z) dz = 0 $よりいえる. 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+定数でない楕円関数$f(z)$の位数($\Omega$内の$f$の極の位数の総和)は2以上である.
+    \end{thm}
+\end{tcolorbox} 
+これは極が１つだと留数の和が0になり得ないためである.
+
+\section{}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[ワイエルシュトラスの$\wp$関数]
+    $\omega_{1}, \omega_{2} \in \C \setminus \{ 0\}$を$\frac{\omega_{2}}{\omega_{1}} \not \in \R$となるようにとる. 
+    $$
+\wp(z) := \frac{1}{z^2} + \sum_{m,n \in \Z , (m,n) \neq (0,0) }
+\left\{ \frac{1}{(z - m \omega_1 - n \omega_2)^2}  - \frac{1}{( m \omega_1 - n \omega_2)^2}\right\}
+    $$
+とおくと, $\wp(z)$は$\C$上の有理型関数となり, $\omega_{1}, \omega_{2}$を周期とする位数2の楕円関数である. 
+    \end{thm}
+\end{tcolorbox} 
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+   $\wp(z)$のローラン展開を$\wp(z) = \frac{1}{z^2} + \sum_{ -1 \le n}a_{n} z^n$とすると
+    $$
+\{ \wp(z)\}^{2}   = 4 \wp(z)^3 - 20 a_2 \wp(z) -28 a_4 $$
+    \end{thm}
+\end{tcolorbox} 
+証明は$z^2 \wp(z)$が偶関数であることから$a_{2n-1}=0$. また$a_0=0$がわかる.
+$f(z)=\{ \wp(z)\}^{2}  - 4 \wp(z)^3 +20 a_2 \wp(z) $を考えると, これは極を持たない楕円関数であり, $-28 a_4$となる定数関数となる.
+
+\begin{rem}
+$L = \{ m \omega_1 + n\omega_2 | m,n \in \Z\}$とし
+$E:= \{ (x,y) \in \C^2 | y^2 = 4x^3 - 20 a_2 - 28a_4\}$とおく.
+$$
+\begin{array}{cccc}
+\varphi : & \C \setminus L  &\rightarrow &E\\
+&z &\rightarrow & (\wp(z), \wp(z)')\\
+\end{array}
+$$
+とおくと, $(\C \setminus L) / \sim$から$E$への連続写像を誘導する. ここで$\sim$は$E$を格子で割ったものとする.
+(おそらく$\C\mathbb{P}^2$を考えた方がわかりやすい気もする.)
+\end{rem}
+
+\section{}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[開写像原理]
+$f$を領域$\Omega \subset \C$上の正則関数とする.
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $f$は開写像である. 
+\item $f : \Omega \rightarrow \C$が単射ならば, 任意の$x \in \Omega$について$f'(x) \neq 0$.
+\end{enumerate}
+
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[最大値原理]
+$f$を領域$\Omega \subset \C$上の定数でない正則関数とする.
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $|f|$は$\Omega$上で最大値をとらない.
+\item $\bar{\Omega}$がコンパクトかつ$|f|$が$\bar{\Omega}$上で連続ならば
+$$
+\sup_{z \in \Omega} |f (z)| \le \max_{z \in \partial \Omega}|f(z)|. 
+$$
+\end{enumerate}
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[最大値原理]
+$f$を領域$\Omega \subset \C$上の単射な正則関数とする.
+このとき$V = f(\Omega)$上の逆関数$f^{-1} : V \rightarrow \Omega$は正則であり, 任意の$a \in V$について
+$$
+(f^{-1})'(a) = \frac{1}{f'(f^{-1}(a))}.
+$$
+
+    \end{thm}
+\end{tcolorbox}
+
+\section{}
+以下$\D := \{z \in \C | |z| <1  \}$とする. 
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[シュワルツの補題]
+    $\D$上の正則写像$\D \rightarrow \D$が$f(0)=0$を満たすとき次が成立する. 
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$z \in \D$について$|f(z)| \le |z|$.
+  \item $|f' (0)| \le 1$.
+  \end{enumerate}
+  さらにある$z_0 \in \D \setminus \{ 0\}$について$|f(z_0)|=|z_0|$となる, もしくは$|f'(0)|=1$となるならば, ある$\alpha \in C$で$|\alpha|=1$かつ$f(z) = \alpha z$となる.
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $f : \D \rightarrow \D$を正則な全単射とするとき, $\theta \in \R, \alpha \in \D$があって
+    $$
+    f(z) = e^{i \theta} \frac{\alpha -z}{ 1 - \bar{\alpha}z}
+    $$
+    \end{thm}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$f$を円盤$D$上の正則関数とすると, $D$上の正則関数$G$があって$G' = f$となる. 
+    \end{thm}
+\end{tcolorbox}
+$\text{$a$と$z$を結ぶ直線}$を$L_a$とするとき
+$G (z)= \int _{L_a} f(\zeta) d\zeta$となる. 
+
+\section{}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}
+$f$を領域$\Omega \subset \C$上の正則関数とする.
+連続曲線$\gamma : [0,1] \rightarrow \Omega$に対し, $\int_{\gamma} f(z) dz$
+を以下のように定義する:
+
+分割$0 = t_0 < t_1 , \cdots < t_{n-1} < t_{n} =1$を細かくとり, $\gamma([t_i, t_{i+1}]) $が$\Omega$内の円盤$D_i$に含まれるとする. $D_i$上では$f$の原始関数$G_i$が存在するので
+$$
+\int_{\gamma} f(z) dz :=
+ [G_1]_{\gamma(t_0)}^{\gamma(t_1)}  +  [G_2]_{\gamma(t_1)}^{\gamma(t_2)} 
+ + \cdots +  [G_n]_{\gamma(t_{n-1})}^{\gamma(t_n)} 
+$$
+と定める. この定義は分割や$D_i, G_i$の取り方によらずきまる. 
+    \end{dfn}
+\end{tcolorbox}
+区分的に滑らかな曲線$\gamma : [0,1] \rightarrow \Omega$については
+$\int_{\gamma} f(z) dz = \int_{0}^{1}f(\gamma(t)) \gamma'(t) dt$である.
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{prop}
+$f$を円盤$D$上の正則関数とすると, 連続閉曲線$\gamma : [0,1] \rightarrow \Omega$に対し, $\int_{\gamma} f(z) dz=0$.
+    \end{prop}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[ホモトープ]
+領域$\Omega \subset \C$内の端点を共有する2つの連続曲線
+$\gamma_1, \gamma_2 : [0,1] \rightarrow \Omega$について,  
+$$
+\varphi(t,0)=\gamma_1, \varphi(t,1)=\gamma_2, 
+\varphi(0,s)=\gamma_1(0) = \gamma_2(0), 
+\varphi(1,s)=\gamma_1(1) = \gamma_2(1), 
+$$
+を満たす連続写像$\varphi : [0,1] \times [0,1] \rightarrow \Omega$が存在するとき, $\gamma_1, \gamma_2$が$\Omega$でホモトープであるという.
+
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+$f$を円盤$D$上の正則関数とするとし, 領域$\Omega \subset \C$内の端点を共有する2つの連続曲線
+$\gamma_1, \gamma_2 : [0,1] \rightarrow \Omega$とする. 
+ $\gamma_1, \gamma_2$が$\Omega$でホモトープであるとき
+$\int_{\gamma_1} f(z) dz=\int_{\gamma_2} f(z) dz$.
+    \end{thm}
+\end{tcolorbox}
+
+\section{}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[単連結]
+領域$\Omega \subset \C$が単連結とは任意の連続な閉曲線
+$\gamma : [0,1] \rightarrow \Omega$が定値写像$[0,1] \rightarrow \Omega$
+とホモトープであることとする. 
+    \end{dfn}
+\end{tcolorbox}
+
+\begin{exa}
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 円盤$D$は単連結.
+  \item $\D \setminus \{ a \}$は単連結ではない. これは$a$の周り一周の閉曲線で$\frac{1}{z - a}$を積分すればわかる.
+  \item $\C \setminus (- \infty, 0]$は単連結. これは円盤$\D$が$\{ z \in \C | 0 < Re z\}$と正則同型で$\{ z \in \C | 0 < Re z\}$が$\C \setminus (- \infty, 0]$と($w = z^2$によって)正則同型であるからである. 
+  \end{enumerate}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+単連結領域$\Omega$上の正則関数は原始関数を持つ. 
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{prop}
+単連結領域$\Omega$上の正則関数で任意の$z \in \Omega$について$f(z) \neq 0$とする.
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z) = e^{h(z)}$となる$\Omega$上の正則関数$h(z)$がある.
+  \item $f(z) = g(z)^2$となる$\Omega$上の正則関数$g(z)$がある.
+  \end{enumerate}
+    \end{prop}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[リーマンの写像定理]
+$\Omega$を$\C$ではない単連結領域とする.
+このとき任意の$z_0 \in \Omega$について, $\Omega$上の正則関数$F$で次の２条件を満たすものがただ一つ存在する.
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $F(z_0) =0$かつ$F' (z_0)$が正の実数.
+  \item $F : \Omega \rightarrow \D$が全単射.
+  \end{enumerate}
+    \end{thm}
+\end{tcolorbox}
+\section{}
+
+リーマンの写像定理の方針. $z_0 =0 \in \Omega$として良い.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\mathcal{F} = \{ f \Omega \rightarrow \D | \text{$f$は単射正則かつ$f(0)=0$}\}$とおくとこれは空ではない集合である. これは$a \in \C \setminus \Omega$をとり$e^{h(z)} = z-a$となる$h(z)$を取ると, ある$r$であって$\frac{r}{h(z) - (h(0) + 2 \pi i)}  + \frac{1}{2 \pi i} \in \mathcal{F}$となるものが取れる. 
+  \item $\sup_{g \in \mathcal{F}} |g'(0)| =  |f'(0)|$となる$f\in \mathcal{F}$が存在する. これにはフルビッツの定理やモンテルの定理を用いる. 
+  \item 上の$f$は全射となる. 
+\end{enumerate}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[フルビッツの定理]
+   $\{ f_{n}\}_{n=1}^{\infty}$を領域$\Omega \subset \C$上の正則関数列とし, $f$を$\Omega$上の関数とする.
+$\Omega$の任意のコンパクト集合上で$\{ f_{n}\}_{n=1}^{\infty}$が$f$に一様収束する(つまり広義一様収束する)と仮定する. 
+もし各$f_n$が単射ならば, $f$は単射または定数関数である. 
+    \end{thm}
+\end{tcolorbox}
+
+\section{}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[モンテルの定理]
+   $\{ f_{n}\}_{n=1}^{\infty}$を領域$\Omega$から$\D$への正則関数列とすると, ある部分列$f_{n_1}, f_{n_2}\ldots $と正則写像$f: \Omega \rightarrow \D$が存在して，
+   $\Omega$の任意のコンパクト集合上で$\{ f_{n_k}\}_{k=1}^{\infty}$が$f$に一様収束する.
+    \end{thm}
+\end{tcolorbox}
+
+\section{}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[計量]
+領域$\Omega \subset \C$とし, $\rho $を$\Omega$上の実数値関数とする.
+さらに$\rho^2$は$C^2$級で$\rho \ge 0$かつ$\rho=0$なる点は離散的であるとする.
+$\rho|dz|$を$\Omega$上の計量とする
+    \end{dfn}
+\end{tcolorbox}
+\begin{exa}
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\C$には$|dz|$という(ユークリッド)計量が入る.
+  \item リーマン球面$\hat{C}$には$\frac{1}{1 + |z|^2} |dz|$という球面計量が入る.
+  \item 単位円盤$\D$には$\frac{1}{1 - |z|^2} |dz|$というポアンカレ計量が入る.
+  \end{enumerate}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{dfn}[曲率]
+$\Omega$上の計量$\rho|dz|$について曲率を次で定義する.
+$$
+\kappa_{\rho}(z)  = \frac{-1}{\rho(z)} \left\{  \left( \pdrv{^2}{x^2} + \pdrv{^2}{y^2}\right) \log \rho(z)\right\}
+$$
+    \end{dfn}
+\end{tcolorbox}
+\begin{exa}
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item ユークリッド計量の曲率は$0$
+  \item 球面計量の曲率は$4$
+  \item ポアンカレ計量の曲率は$-4$
+  \end{enumerate}
+\end{exa}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+    $\D$上の$\kappa_{\rho} \le -4$となる計量$\rho|dz|$について$\rho \le \frac{1}{1 - |z|^2}$.
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[計量の引き戻し・等角不変性]
+$f : \Omega_1 \rightarrow \Omega_2$を正則写像とするとき, 
+$\Omega_2$上の計量$\rho(w)|dw|$について, 引き戻しを次で定義する:
+$$
+f^{*}(\rho(w) dw) := \rho(f(z)) |f' (z)| |dz|
+$$
+このとき$\kappa_{\rho}= \kappa_{f^{*}\rho}$である.
+    \end{thm}
+\end{tcolorbox}
+
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}[アールフォルスによるシュワルツの補題]
+       $\Omega$上の計量$\rho|dw|$がの$\kappa_{\rho} \le -4$を満たすとする.
+       このとき任意の$f : \D \rightarrow \Omega$について
+       $$
+       \rho(f(z)) |f'(z)| \le \frac{1}{1 - |z|^2}
+       $$
+    \end{thm}
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true]
+    \begin{thm}
+       $\Omega$上の計量$\rho|dw|$がある定数$B>0$について$\kappa_{\rho} \le -B <0$を満たすとする.
+任意の正則写像$f : \C \rightarrow \Omega$は定数である.
+    \end{thm}
+\end{tcolorbox}
+\begin{exa}
+上の定理の応用例を挙げる. 
+    \begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\D$上のポアンカレ計量は曲率は負であるので, 任意の正則写像$f : \C \rightarrow \D$は定数である. これはリウヴィユの定理に他ならない.
+  \item $ \C \setminus \{ 0,1\}$には
+  $$
+  \rho := \frac{(1 + |w|^{\frac{1}{3}})^{\frac{1}{2}}}{|w|^{\frac{5}{6}}} \frac{(1 + |w-1|^{\frac{1}{3}})^{\frac{1}{2}}}{|w-1|^{\frac{5}{6}}}
+  $$
+  として計量を定めると, ある定数$B>0$があって$\kappa_{\rho} \le -B <0$を満たす. 
+  よって任意の正則写像$f : \C \rightarrow  \C \setminus \{ 0,1\}$は定数である. これはピカールの小定理に他ならない. 
+  \end{enumerate}
+\end{exa}
+
+
+ \end{document}
+ 
+ 
+
+ 

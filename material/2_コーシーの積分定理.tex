@@ -1,0 +1,183 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 2 コーシーの積分定理・リウヴィユの定理・留数計算}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とする.
+また$|z|=a$となる円周の向きは反時計回りで入れるものとする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{コーシーの積分定理に関する問題}
+
+\begin{enumerate}[label=\textbf{問}2.\arabic*]
+
+
+
+\item $^{\bullet}$ $f(z)$を$\D= \{ z \in \C | |z|<1\}$上の正則関数とする.
+ $0 < r<1$とし, $M$を$|z|=r$における$|f(z)|$の最大値とするとき, $|f'(0)| \le \frac{M}{r}$であることを示せ.
+ 
+
+\item $^{\bullet}$ $|\alpha|\neq 1$となる複素数$\alpha$について, 線積分$\int_{|z|=1} \frac{1}{z-\alpha} dz $を計算せよ.
+
+
+\item $^{\bullet}$ 線積分$\int_{|z|=2} \frac{1}{z^2 + 1} dz $を計算せよ. 
+\item  線積分$\int_{|z-1|=1} \frac{e^z}{z^4 + 1} dz $を計算せよ. 
+\item $n$を整数とする. 線積分$\int_{|z|=2} \frac{z^n}{1-z} dz $を計算せよ. 
+\item $P(z)$を$z$に関する複素係数多項式とする. 線積分$\int_{|z|=2} \overline{P(z)} dz $を計算せよ. 
+
+
+ 
+ 
+ \vspace{12pt}
+\hspace{-36pt}\underline{リウヴィユの定理に関する問題}
+
+\item$^{\bullet}$ (代数学の基本定理) リウヴィユの定理を用いて「定数でない複素係数多項式は複素数体上で解を持つ」ことを示せ. 
+
+ \item $^{\bullet}$ $f(z)$を$\C$上の正則関数とする. ある$M>0$があって$\C$上で$|f(z)| \le M e^{{\rm Re}z}$となるならば
+ $f(z) = a e^{z}$となる$a \in \C$が存在することを示せ. 
+ 
+ \item $\C$上の正則関数$f$について, ${\rm Re}(f)$が下に有界であるならば, 定数関数であることを示せ. 
+
+ \item $f$を$\C$上の定数でない正則関数とするとき, $f(\C)$は$\C$上稠密であることを示せ. 
+ 
+ 
+
+ 
+% 留数計算の問題
+ 
+ \vspace{12pt}
+\hspace{-36pt}\underline{計算問題(標準的な積分経路をするもの)}
+
+ 
+ \item  $^{\bullet}$ 広義積分$\int_{ - \infty}^{\infty}\frac{1}{x^4+ 1} dx$は収束することを示し, その値を求めよ.
+    
+  \item $^{\bullet}$  広義積分$\int_{ - \infty}^{\infty}\frac{1}{(x^2+ 1)^{2}} dx$は収束することを示し, その値を求めよ.
+  
+ \item $a \in \R$について$\int_{- \infty}^{\infty}\frac{e^{-iax}}{x^2+1} dx$の値を求めよ. また$\int_{0}^{\infty}\frac{\cos x}{x^2 + 1} dx$の値を求めよ.
+ 
+  \item $\int_{0}^{\infty} \frac{\log x}{(x^2 + 1)^2} dx$の値を求めよ. ($\log z$の扱いに注意せよ.)
+
+ \item $a \in \R$について $\int_{- \infty}^{\infty} e^{-2 \pi i a x } e^{- \pi x^2}dx$の値を求めよ.
+ 
+\item   $^{*}$ $\frac{e^{iz}}{z}$を考えることにより, $\int_{0}^{\infty}\frac{\sin x}{x} dx$の値を求めよ.
+        
+%\item  $\int_{0}^{\infty}\frac{\cos x}{x^2 + 1} dx$の値を求めよ.
+ \newpage 
+  \vspace{12pt}
+\hspace{-36pt}\underline{計算問題(積分経路が特殊なもの)}
+
+   \item  $\int_{0}^{\infty}\frac{1}{x^3+ 1} dx$の値を求めよ. (ヒント: 120度の扇形を考える.)
+   
+\item $\int_{0}^{\infty}\cos x^2 dx$の値を求めよ. (ヒント: 45度の扇形を考える.)
+
+\item $^{*}$  $\log(1-e^{2iz})$と$\{ z \in \C | 0 \le {\rm Re}(z) \le \pi, {\rm Im}(z) \ge 0\}$を考えることにより, $\int_{0}^{\pi}\log (\sin x) dx$の値を求めよ.
+% \item  (2017年度 阪大院試問題) 次の問いに答えよ.
+%  \begin{enumerate}
+%\setlength{\parskip}{0cm} 
+%  \setlength{\itemsep}{0cm} 
+%  \item $r>0$とし$\C$上の積分路を$C_{r} : z = r e^{i \theta} (0 \le \theta \le \pi)$とおく. 
+%  $I(r) := \int_{C_r} \frac{e^{iz}}{z} dz$とおくとき, $\lim_{r \rightarrow 0} I(r)$と$\lim_{r \rightarrow \infty} I(r)$の値をそれぞれ求めよ. 
+%\item 広義積分  $\int_{0}^{\infty}\frac{\sin x}{x} dx$は収束することを示し, その値を求めよ.
+%  \end{enumerate}
+ 
+ \end{enumerate}
+
+
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

@@ -1,0 +1,177 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 3 ワイエルシュトラスの二重級数定理・ベキ級数}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D= \{ z \in \C | |z|<1\}$とする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{ワイエルシュトラスの二重級数定理に関する問題}
+
+\begin{enumerate}[label=\textbf{問}3.\arabic*]
+
+\item 滑らかな曲線$C$上の連続関数列$f_n$が$f$に一様収束すれば,
+$\lim_{n\rightarrow \infty} \int_{C}f_n(z) dz = \int_{C} f(z) dz$であることを示せ.\footnote{1年次に習った定理を用いて良い. ただしどのように使ったか明記すること.}
+\item 
+$\D$上の正則関数列$\{ f_{n}\}_{n=1}^{\infty}$と正則関数$f$であって, $\D$の
+任意のコンパクト集合上で$f_n$は$f$に一様収束するが, $\D$上では$f_n$は$f$に一様収束しない例を一つ構成せよ. 
+
+
+\item $^{*}$次を満たす例を構成せよ. \footnote{そこまで厳密に構成しなくても良い.}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $\{ f_{n}\}_{n=1}^{\infty}$を$(0,1)$上の$C^{\infty}$級関数列で$f$を$(0,1)$上の$C^{\infty}$級関数.
+\item $(0,1)$の任意のコンパクト集合上で$\{ f_{n}\}_{n=1}^{\infty}$が$f$に一様収束する.
+\item $\{ \drv{f_{n}}{x}\}_{n=1}^{\infty}$は$(0,1)$のあるコンパクト集合上で$\drv{f}{x}$に一様収束しない.
+\end{enumerate}
+
+ \vspace{12pt}
+\hspace{-36pt}\underline{ベキ級数に関する問題}
+
+\item $^{\bullet}$次の問いに答えよ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+%\item 原点を含むある開集合上の正則関数は原点の周りでベキ級数展開できることを示せ.
+\item 正則関数は$C^{\infty}$級関数であることを示せ.
+\item $\R$上の$C^{\infty}$級関数$f$で原点の周りでベキ級数展開できないものを一つ構成せよ. 
+\end{enumerate}
+
+\item $^{\bullet}$$f(z) $を半径$R>0$の円盤$D_{R} = \{ z \in \C | |z|<R\}$上の正則関数とする. 任意の$0 < r < R$について, 収束半径$r$以上のベキ級数$\sum_{n=0}^{\infty} a_n z^n$で$D_{r}$上で$f(z) = \sum_{n=0}^{\infty} a_n z^n$となるものが存在することを示せ. 
+
+  \item $\C$上の正則関数$f(z)$とする. ある正の実数$A,B$と自然数$k$があって, 任意の$z \in \C$について
+  $
+  |f(z)| \le A|z|^k +B
+  $
+  となるならば, $f(z)$は高々$k$次の多項式であることを示せ.
+  
+
+
+\item $f(z) = \sum_{n=0}^{\infty} a_n z^n$を半径$R>0$の円盤$D_{R} = \{ z \in \C | |z|<R\}$上の正則関数とし, $0< r < R$とする. 次を示せ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $|a_n| \le \frac{1}{2 \pi r^n} \int_{0}^{2 \pi} |f(r e^{i \theta})| d \theta$
+  \item  $\sum_{n=0}^{\infty} |a_n|^2 r^{2n} =\frac{1}{2 \pi} \int_{0}^{2 \pi} |f(r e^{i \theta})|^2 d \theta$
+  \end{enumerate}
+  
+\newpage 
+  
+   \vspace{12pt}
+\hspace{-36pt}\underline{一致の定理に関する問題} 
+  
+    \item $f$を$\Omega$上の正則関数とする.  次の問いにこたえよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+   \item (零点の孤立) $f$を定数関数ではないとし, $a \in \Omega$を$f$の零点とする. 
+   このとき$a$を含む半径$r > 0$の円盤$D$で, $\bar{D} \subset \Omega$かつ$f$は$D \setminus \{ a\}$上で零点を持たないようなものが存在することを示せ.\footnote{正則関数の零点は孤立しているということである. これは一変数特有の現象である. }
+     \item (一致の定理) ある空でない開集合$U \subset \Omega$があって$U$上で$f \equiv 0$ならば, $\Omega$上で$f \equiv0$であることを示せ. 
+     %$a_{n}$を$a \in \Omega$に収束する$\Omega$の複素数列とする. (ただし任意の$n \in \N$について$a_n \neq a$とする.) 任意の$n \in \N$について$f(a_n)=0$ならば$f \equiv 0$であることを示せ.
+     
+   \end{enumerate}
+   \item $^{\bullet}$ $\Omega$上の正則関数$f,g$が$fg \equiv 0$を満たすならば$f \equiv 0$または$g \equiv 0$であることを示せ. また$f,g$が単に$C^{\infty}$級関数の場合は同様の主張は成り立つか?
+   
+ \end{enumerate}
+ 
+
+
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

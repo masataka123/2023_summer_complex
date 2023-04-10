@@ -1,0 +1,184 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 1　正則性}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とする.
+
+\begin{enumerate}[label=\textbf{問}1.\arabic*]
+
+\item$^{\bullet}$次の問いに答えよ.
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 「複素数$a_n$からなる級数$\sum_{n=1}^{\infty} a_n$が絶対収束する」ことの定義を述べよ.
+  \item 複素数$a_n$からなる級数$\sum_{n=1}^{\infty}  a_n$が絶対収束するとする. このとき全単射$f : \N \rightarrow \N$について, $\sum_{n=1}^{\infty}  a_{f(n)} $も絶対収束して極限値は$\sum_{n=1}^{\infty}  a_n$であることを示せ.
+\end{enumerate}
+
+\item$^{\bullet}$次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 「$\Omega$上の関数列$f_{n}$が$\Omega$上の関数$f$に一様収束する」ことの定義を述べよ. 
+  \item $\Omega$上の関数列$f_{n}$と$\Omega$上の関数$f$であって, 任意の$z \in \Omega$について$\lim_{n \rightarrow \infty} f_n(z) =f(z)$であるが, $f_{n}$が$f$に一様収束しない例をあげよ. 
+  \item $\Omega$上の関数列$f_{n}$が$\Omega$上の関数$f$に一様収束すると仮定する. 任意の$n \in \N$について$f_{n}$が$\Omega$上で連続ならば, $f$も連続であることを示せ.
+      \end{enumerate}
+
+
+\item $^{\bullet}$(コーシー・リーマン方程式)$f(z)$を$\Omega$上の複素数値$C^{\infty}$級関数とする．
+$z = x + iy \in \C$とし$f(z)$を$(x,y)$の関数$f(x,y)$と考え, 
+$
+f(x,y) = u(x,y) + i v(x,y)
+$
+とおく． ($u,v$は実数値$C^{\infty}$級関数とする.)
+次は同値であることを示せ.
+%\footnote{必要ならばコーシー・リーマン方程式を用いて良い.}
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z)$は$\Omega$上で正則である.
+  \item $\pdrv{u}{x} = \pdrv{v}{y}$ かつ $\pdrv{v}{x} = - \pdrv{u}{y}$が成り立つ.
+\end{enumerate}
+
+
+  
+ \item $^{\bullet}$次の関数は正則関数であるか判定せよ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z) = \bar{z}$
+   \item $f(z) = |z|^2$
+    \item $f(z) = \frac{1}{z}$ (ただし定義域は$\C \setminus \{ 0\}$とする.)
+ \end{enumerate}
+ 
+ \item $f(z)$を$\C$上の正則関数とする. このとき$g(z) = \overline{f(\bar{z})}$もまた$\C$上の正則関数であることを示せ. 
+
+\item $f(z)$を$\Omega$上の正則関数とする. 任意の$z \in \Omega$について$f'(z)=0$となるならば$f$は定数関数であることを示せ.
+
+
+
+\item \label{delbar}$z = x + iy \in \C$として複素偏微分を次で定義する.
+$$
+\pdrv{}{z} := \frac{1}{2} \left(\pdrv{}{x}  - i \pdrv{}{y} \right), \quad
+\pdrv{}{\bar{z}} := \frac{1}{2} \left(\pdrv{}{x}  + i \pdrv{}{y}\right)
+$$
+
+$f(z)$を領域$\Omega  \subset \C$上の$C^{\infty}$級関数とするとき, 次は同値であることを示せ.
+%\footnote{必要ならばコーシー・リーマン方程式を用いて良い.}
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z)$は$\Omega$上で正則である.
+  \item $\Omega$上で$\pdrv{f}{\bar{z}}  \equiv 0$.
+\end{enumerate}
+
+\item 引き続き\ref{delbar}の通りの記号を用いる. 次の問いに答えよ. 
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item  $f(z)$を$\Omega$上の正則関数とするとき, $f'(z)=\pdrv{f}{z}$であることを示せ.
+\item $f(z)$を$\Omega$上の$C^{\infty}$級関数とするとき, 次を示せ.
+$$\pdrv{}{z}\pdrv{}{\bar{z}} f(z) = \frac{1}{4}\left(\pdrv{}{x^2} + \pdrv{}{y^2} \right) f(z)$$
+ \end{enumerate}
+ 
+
+ \end{enumerate}
+
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}
