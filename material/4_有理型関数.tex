@@ -6,7 +6,7 @@
 \usepackage{amsfonts,amsthm,mathtools} %もちろん
 \usepackage{braket,physics} %あると便利なやつ
 \usepackage{bm} %ラプラシアンで使った
-\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage[top=30truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
 \usepackage{latexsym} %ごくたまに必要になる
 \renewcommand{\kanjifamilydefault}{\gtdefault}
 \usepackage{otf} %宗教上の理由でmin10が嫌いなので
@@ -99,7 +99,6 @@
 
 \begin{enumerate}[label=\textbf{問}4.\arabic*]
 
-
 \item $^{\bullet}$次の問いに答えよ. %\footnote{問題の都合上$f$や$a$が何かは言えないが,.}
    \begin{enumerate}
  \setlength{\parskip}{0cm} 
@@ -109,9 +108,15 @@
     \end{enumerate}
     
  
-\item $^{\bullet}$ $\frac{e^z}{z^3}$の$z=0$での留数を求めよ.
-\item $^{\bullet}$ $\frac{z^4 + 3}{z^4 -1}$の$z=i$での留数を求めよ.
+\item $^{\bullet}$ 「$\frac{e^z}{z^3}$の$z=0$での留数」と「$\frac{z^4 + 3}{z^4 -1}$の$z=i$での留数」をそれぞれ求めよ.
+%\item $^{\bullet}$ $\frac{z^4 + 3}{z^4 -1}$の$z=i$での留数を求めよ.
 \item $^{\bullet}$ $e^{z + \frac{1}{z}}$の$z=0$でのローラン展開を求めよ.
+
+\item $^{\bullet}$ (Chat GPTによる問題) 以下の関数の留数や特異点を求めよ.\footnote{Chat GPTに「複素関数論続論演義の問題の案を教えて」と言ったらこの問題が返ってきた. その他いろいろと試してみるとChat GPTは私の演習問題を5-7割くらい解けるようである. }
+
+(a) $f(z) = \frac{1}{(z-1)^2(z+2)}$,  
+(b) $f(z) = \frac{\sin z}{z^3(z-\pi)^2}$
+
 
 \item $\frac{1}{(z-1)(z-2)}$の円環領域$\{ z\in \C | 1 < |z| < 2\}$におけるローラン展開を求めよ.
 
@@ -137,7 +142,8 @@
  \item $^{\bullet}$  $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, $f$を$\D^{*}$上の正則関数とする. 
  $f$が$\D^{*}$上で有界ならば, $f$は$\D$上の正則関数に拡張できることを示せ. 
  
-  \item $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, $f$を$\D^{*}$上の正則関数とする. 
+  \item $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, 
+  $f$を$\D^{*}$上の正則関数とする. 
  $z \in \D^{*}$によらない定数$M>0$があって, $\D^{*}$上で$|f(z)| \le M \log |z|$
  を満たすとき, $f$は$\D$上の正則関数に拡張できることを示せ. \footnote{もっと強く$f$が$L^2$関数なら拡張できる.(演習でこれを示しても良い).}
  
