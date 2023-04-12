@@ -97,13 +97,13 @@
 -->
 
 # 問題作成にあたり参考にしたもの
-- 山ノ井先生の昨年度の講義ノート・演習問題
+- 山ノ井先生の昨年度の講義ノート・演習問題 [昨年度のノートのまとめ](https://github.com/masataka123/2023_summer_complex/blob/master/material/0_複素解析ノート.pdf)
 - アールフォルス「複素解析」
 - 野口潤次郎「複素解析概論」
 - 磯祐介「複素関数論入門」
 - 楳田登美男 「理工系のための入門複素関数論」
-- 平地健吾先生の授業のホームページ [Link](https://sites.google.com/site/mathhirachi/courses-2019/complex1-2019)
-- 竹内有哉先生の授業のホームページ [Link](https://sites.google.com/view/aca-2019s)
+- 平地健吾先生の授業のホームページ [2019年度](https://sites.google.com/site/mathhirachi/courses-2019/complex1-2019) [2006年度](https://www.ms.u-tokyo.ac.jp/~hirachi/courses/complex1-2006/)
+- 竹内有哉先生の授業のホームページ [2019年度](https://sites.google.com/view/aca-2019s)
 - 大阪大学大学院理学研究科数学専攻博士前期課程 [入試問題](http://www.math.sci.osaka-u.ac.jp/inshi/)
 - 東京大学大学院数理科学研究科 入試問題
 
