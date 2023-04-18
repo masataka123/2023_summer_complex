@@ -54,11 +54,19 @@
 
 - 第2回 (2023/04/18).  正則性 [第1回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/1_正則性.pdf)
 
+<u>残っている問題: 問1.1, 1.3-1.6, 1.8.</u>
+
 - 第3回 (2023/04/25). コーシーの積分定理 [第2回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/2_コーシーの積分定理.pdf)
+
+<u>次回解答予定. 問 2.19 残っている問題: 問2.4-2.6, 2.8-2.13, 2.15-2.18</u>
 
 - 第4回 (2023/05/09). ベキ級数 [第3回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/3_ベキ級数.pdf)
 
+<u>残っている問題: 全て</u>
+
 - 第5回 (2023/05/16). 有理型関数 [第4回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/4_有理型関数.pdf)
+
+<u>残っている問題: 全て</u>
 
 - 第6回 (2023/05/23). 
 
