@@ -1,0 +1,237 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 7 シュワルツの補題}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+[用語] $f : M \to M$が正則な全単射のとき\underline{正則自己同型}という.
+$f : M\to N$が正則な全単射であるとき, \underline{双正則写像}という.
+
+
+\begin{enumerate}[label=\textbf{問}7.\arabic*]
+
+\item$^{\bullet}$ $f(0)=0, f(\frac{1}{2})=\frac{i}{2}$となる正則な全単射(正則自己同型)$f : \D \to \D$を全て求めよ.
+
+\item \label{isom} $^{\bullet}$ $|\alpha| <1$となる$\alpha \in \C$について$\Phi_{\alpha}(z) := \frac{\alpha - z}{1 - \bar{\alpha} z}$とおく. 次の問いにこたえよ. 
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\Phi_{\alpha} \circ \Phi_{\alpha}(z) =z$.
+  \item $|z|=1$ならば$|\Phi_{\alpha}(z)|=1$
+    \item $|z|<1$ならば$|\Phi_{\alpha}(z)| < 1$
+\end{enumerate}
+
+\item \label{HtoD}$^{\bullet}$ $\Psi(z) = \frac{z-i}{z+i}$, $\mathbb{H}:=\{ z \in \C | {\rm Im}(z) >0\}$とおく. 次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $z \in \mathbb{H}$について$|\Psi(z)| \le 1$であることを示せ.
+  \item $\Psi(z)$は$\Psi :  \mathbb{H} \to \D$となる正則な全単射であることを示せ. (ヒント: 逆写像$\Phi : \D \to \mathbb{H}$は$\Phi(z)=\frac{iz + i}{-z +1}$である(なぜか?))
+  \end{enumerate}
+  
+\item $^{\bullet}$ $f : \D \to \D$を正則関数とするとき, 次を示せ. (ヒント: \ref{isom}とシュワルツの補題.)
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$z \in \D$について
+  $
+  \left|\frac{f(z) - f(0)}{1 - \overline{f(0)} f(z)}\right| \le |z|
+  $
+  \item $|f' (0)| \le 1 - |f(0)|^2$
+    \end{enumerate}
+    
+    \item $f(z)$を$\D$上で正則な関数で${\rm Re}f(z) >0$かつ$f(0)=1$となるものとするとき, 次を示せ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$z \in \D$について $ \left|\frac{f(z) -1}{f(z)+1} \right| \le |z|$
+    \item $ \left|f'(0) \right| \le 2$
+  \end{enumerate} 
+  
+    %\item 正則写像$f : \D \rightarrow \D$について$|f' (0)| \le 1 - |f(0)|^2$を示せ.
+
+
+%\item  次の問いに答えよ. 
+%\begin{enumerate}
+%\setlength{\parskip}{0cm} 
+ % \setlength{\itemsep}{0cm} 
+%\item 任意の$z \in \mathbb{H}$について, $f(z)=i$となる$\mathbb{H}$の正則自己同型$f$が存在すること示せ.  %$\mathbb{H}:=\{ z \in \C | {\rm Im}(z) >0\}$の正則自己同型を全て求めよ. また任意の$z \in \mathbb{H}$について, $f(z)=i$となる$\mathbb{H}$の正則自己同型$f$が存在すること示せ. (ヒント: \ref{HtoD}を用いる.)
+%\item $f(i)=i$となる$\mathbb{H}$の正則自己同型$f$を全て求めよ.
+%    \end{enumerate}
+\item  $^{*}$ 穴あき円板$\D^{*}=\{z \in \C | 0< |z| <1 \}$の正則自己同型を全て求めよ.  (ヒント: そのようなものは原点周りで有界である.)
+
+  
+
+  \item $f(z)$は$\D$上で正則かつ$\bar{\D}$上で連続な関数とする. $f(0)=0$であり, $0 < |z| \le 1$について$f(z) \neq 0$, $|z|=1$について$|f(z)|=1$を満たすとする． このときある$|a|=1$となる$a \in \C$と自然数$m$があって$f(z)=az^m$とかけることを示せ．
+  
+  \item $f(\alpha)=\alpha$となる$\alpha$を$f$の不動点という. 次の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item 正則関数$f : \D \to \D$が2つの不動点を持つとき, $f(z)=z$となることを示せ．
+ \item 任意の正則関数$f : \D \to \D$は不動点を持つか?(ヒント: $\mathbb{H}$を考えよ.)
+      \end{enumerate} 
+      
+      \item $f$を$\D$上の正則関数とする. ある$0 < a<1$があって$\D$上で$|f(z)| <a$となるならば, 不動点が存在することを示せ.
+
+\newpage
+
+  
+\item $D$を原点を含む有界領域とし, $f : D \rightarrow D$を$f(0)=0$となる正則写像とする.次の問いにこたえよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f_k:=\underbrace{f \circ \cdots \circ f}_{\text{$k$回}}$とするとき$f_{k}' (0) = (f'(0))^k$であることを示せ. 
+  \item $|f'(0)| \le 1$であることを示せ.  (ヒント: $|f_k|$は有界である.)
+    \end{enumerate} 
+  \item $^{*}$ 次の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $z,w \in \D $と整数$ n \ge 2$について
+  $
+  |z^{n-1}+ z^{n-2}w + \cdots +w^{n-1}| \le n
+  $
+を示せ.
+  \item $f(z) = \sum_{n=0}^{\infty}a_n z^n$を$\D$上の正則関数とする. 
+  $a_1 \neq 0$かつ$\sum_{n=2}^{\infty}n|a_n| \le |a_1|$であるならば
+  $f $は$\D$上で単射であることを示せ.
+    \end{enumerate} 
+  
+
+
+   \item $^{*}$ $z, w \in \D$について
+   $$
+   \rho (z,w)= \left|\frac{z-w}{1 - \bar{w}z}\right|
+   $$
+   とおく. \footnote{擬-双曲的距離と呼ばれる}次の問いに答えよ. 
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の正則関数$f : \D \to \D$について$\rho(f(z), f(w)) \le \rho(z, w)$を示せ.
+  \item 任意の正則自己同型写像$f : \D \to \D$について$\rho(f(z), f(w)) = \rho(z, w)$を示せ. 
+   \item 任意の正則関数$f : \D \to \D$について,
+   $$
+   \frac{|f'(z)|}{1 - |f(z)|^2} \le    \frac{1}{1 - |z|^2} 
+   $$
+   であることを示せ(シュワルツ-ピックの補題と呼ばれる).
+           \end{enumerate} 
+
+\hspace{-12pt}
+以下の問題は第6回演習問題の内容である.\footnote{第6回の問題に入り切らなかったが, どうしても出したかったので出しておく.}
+ \item $^{*}$  $u : \D \rightarrow \R$を$C^{\infty}$級関数とする. $u$が\underline{劣調和関数}であるとは
+ 任意の$a \in \D$と$|a|+r <1$となる任意の$r>0$について, 
+ $$
+ u(a) \le \frac{1}{2 \pi} \int_{0}^{2 \pi}  u(a +  re^{i \theta})  d \theta
+ $$
+ が成り立つこととする. 次の問いに答えよ. 
+
+   \begin{enumerate}
+ \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f$を$\D$上の正則関数とするとき, $ |f(z)|$は劣調和関数であることを示せ.  %\footnote{証明に際し, "ある不等式"を証明なしで用いて良い. }
+  \item 劣調和関数$u$が$\D$の内部で最大値を持つならば, 定数関数であることを示せ. (つまり最大値原理は正則よりも弱い条件で成り立つ.)
+      \end{enumerate}  
+   
+  \end{enumerate} 
+ 
+
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

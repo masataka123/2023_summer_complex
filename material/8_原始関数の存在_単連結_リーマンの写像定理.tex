@@ -1,0 +1,226 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=20truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 8 原始関数の存在・単連結・リーマンの写像定理}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{単連結に関する問題}
+\begin{enumerate}[label=\textbf{問}8.\arabic*]
+
+\item $^{\bullet}$ 単連結の定義を述べよ. また単連結な領域と単連結でない領域例をそれぞれ2つ挙げよ.\footnote{\ref{convex}を用いても良い. 正直言って今の段階では単連結領域は$\D$ぐらいしか出ない...}
+
+\item $\Omega_{1}, \Omega_{2}$を2つの同相な領域とする. $\Omega_{1}$が単連結ならば$\Omega_2$も単連結であることをしめせ.
+
+\item \label{convex} 「任意の$a, b \in \Omega$について$a$と$b$を結ぶ線分が$\Omega$に含まれる」領域$\Omega$は単連結であることを示せ. 
+
+\item $\{ \Omega_{n} \}_{n \in \N}$を$\Omega_n \subset \Omega_{n+1}$となる$\C$内の単連結な領域の族とする. このとき$\cup_{n \in \N}\Omega_{n}$は単連結であることを示せ. (ヒント: 各$\Omega_n$が開集合であることを用いる.)
+
+    
+    \item Chat GPTに「リーマンの写像定理に関する問題を教えて」と打ち込んで出てきた問題(a), 問題(b)を解け. なお問題文として破綻している可能性もある.
+    \vspace{-8pt}
+       \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 領域 $G=\{z\in \mathbb{C}: 1<|z|<2\}$ を単位円板 $\mathbb{D}$ に正則に写像するような双正則写像 $f:G\to \mathbb{D}$ を求めよ。ただし、単位円板上には値をとらないとする。
+  \item 領域 $G=\{z\in \mathbb{C}: |z-1|<1\}\cup \{z\in \mathbb{C}: |z+1|<1\}$ を上半平面 $\mathbb{H}$ に正則に写像するような双正則写像 $f:G\to \mathbb{H}$ を求めよ。ただし、上半平面上には値をとらないとする。
+      \end{enumerate} 
+
+  
+%問題(a), 問題(b)の主張は果たして正しいかどうか真偽を判定せよ. 
+  
+  
+%\footnote{各$\Omega_n$が開集合であることを用いる. 今回, 領域(連結開集合)でしか単連結を定義していないのでこのような問題になった. 一般に"各$\Omega_n$が開集合"という仮定がなければ, この主張には反例がある(余力があればその反例を挙げよ).} 
+
+%\item 正則関数$F : \C \rightarrow \C \setminus \{ 0\}$であって次を満たすものを一つ構成せよ.\begin{enumerate}\setlength{\parskip}{0cm} \setlength{\itemsep}{0cm} \item $F$は全射であり, 任意の$w \in \C \setminus \{ 0\}$について$F^{-1}(w)$は無限集合である.  \item 任意の$f : \C \rightarrow \C \setminus \{ 0\}$について, ある$g : \C \rightarrow \C$があって$F \circ g = f$となる.\end{enumerate} 
+
+%\vspace{12pt}
+\hspace{-36pt}\underline{原始関数に関する問題}
+
+
+\item $^{\bullet}$ 
+次の問いに答えよ.
+\vspace{-12pt}
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $\C \setminus \{ ( -\infty, 0]\}$上の正則関数$f(z)$で$f'(z) = \frac{1}{z}$となるものは存在することを示せ.
+\item $\C \setminus \{ 0\}$上の正則関数$f(z)$で$f'(z) = \frac{1}{z}$となるものは存在しないことを示せ.
+  \end{enumerate}
+
+\item $^{\bullet}$  $f(z)$を$\D$上の正則関数とする. $f$が零点を持たないとき, $f = h^7$となる$\D$上の正則関数が存在することを示せ.
+
+
+
+\item  $\C \setminus \{ 0\}$上の正則関数$( \frac{1}{z} + \frac{a}{z^3})e^z$が$\C \setminus \{ 0\}$上で原始関数を持つような定数$a$の値とそのときの原始関数を求めよ. 
+
+\item $\C \setminus \{ 0\}$上の正則関数$f$で$z^5 = f^7$となるものは存在しないことを示せ. 
+
+\item $\C$上の正則関数$f(z)$が$f(z+1)=f(z)$を満たすとき, ある$\C \setminus \{ 0\}$上の正則関数$g(w)$で$f(z) = g(e^{2 \pi i z})$となるものが存在することを示せ． 
+
+\item  $^{*}$ \label{inshi} $\D$上の単射な正則関数$f(z)$で$f(0)=0, f'(0)=1$を満たすもの全体の集合を$\mathcal{F}$とする. 
+次の問いに答えよ.
+\vspace{-8pt}
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$a \in \D$について, $g(z) = \frac{z}{(1 - az)^2}$は$\mathcal{F}$の元であることを示せ. またある$G \in \mathcal {F}$で$g(z^2) = (G(z))^2$となるものが存在することを示せ. 
+  \item 任意の$f \in \mathcal{F}$について$f(z^2) = (F(z))^2$となる$F \in \mathcal{F}$が存在することを示せ. 
+      \end{enumerate} 
+      
+ \item $^{*}$ (ケーべ 1/4 定理) 引き続き$\mathcal{F}$を\ref{inshi}のとおりとする. ケーべ1/4定理 「正則関数$f : \D \to \C$で$f(0)=0, f'(0)=1$かつ$f$が単射ならば, $D_{1/4}(0):=\{w \in \C : |w| <  1/4\} \subset f(\D)$である」を以下の手順で証明せよ.
+
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $h(z) = \frac{1}{z} + c_0 + c_1 z + \cdots$が$0 < |z|<1$上で正則かつ単射ならば$\sum_{n=1}^{\infty}n|c_n|^2 \le 1$を示せ. (ヒント: $h(D_{r}(0) \setminus \{ 0\})$の補集合の面積を計算し$r \to 1$とする)
+ \item $f\in \mathcal{F}$とする. $f(z) = z +a_2 z^2 + \cdots$とおくと$|a_2| \le 2$であることをしめせ.
+ また$|a_2|=2$であることは, $\theta \in \R$があって
+ $
+ f(z) = \frac{z}{(1 - e^{i \theta}z)^2}
+ $
+ となることと同値であることを示せ.(ヒント: \ref{inshi}(b)のような$F(z)$を取り, $\frac{1}{F}$に(a)を用いる)
+ \item $h(z) = \frac{1}{z} + c_0 + c_1 z + \cdots$が$0 < |z|<1$上で正則かつ単射で$\alpha,\beta$を値として取らない\footnote{$\alpha \not \in h(\D)$ということ.}ならば$|\alpha - \beta| \le 4$であることを示せ. (ヒント: $\frac{1}{h(z)-\alpha}$の2次の項をみる)
+ \item $f$が$\alpha$を値として取らないならば, $|\alpha | \ge\frac{1}{4}$を示せ. またケーべ1/4定理を示せ. (ヒント: $\frac{1}{f}$は0と$\frac{1}{\alpha}$を値として取らない.)
+\item  $G(z) = \frac{z}{(1 - z)^2}$とおくと$-\frac{1}{4} \not \in G(\D)$であることを示せ. これよりケーべ1/4定理の"1/4"は最良である.
+  \end{enumerate} 
+ 
+   
+
+%\vspace{12pt}
+\hspace{-36pt}\underline{リーマンの写像定理・モンテルの定理・フルビッツの定理}
+\item $^{\bullet}$ リーマンの写像定理の主張を述べよ.
+    
+ \item $^{\bullet}$ $\Omega$上の正則関数列$\{ f_{n}\}_{n=1}^{\infty}$と正則関数$f$とする. $f$は定数関数でないとし, $f_n$は$f$に$\Omega$の 任意のコンパクト集合上で一様収束すると仮定する. 
+「任意の$f_{n}$が$\Omega$内に零点を持たないならば, $f$もまた$\Omega$内に零点を持たないこと」を以下の手順で示せ. .\footnote{演習問題や講義で習った内容は証明なしで用いて良い. この問題は授業の内容の理解度を試せるので是非ともやってください.}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(w)=0$となる$w \in \Omega$が存在するとする. このとき, $w \in\Omega$を含む円板$D \subset \Omega$で「$\bar{D} \subset \Omega$かつ$f$は$\bar{D} \setminus \{ w\}$上で零点を持たない」となるものが存在することを示せ. (ヒント: 零点の孤立 問3.8)
+  \item 上の$w, D$について, $L := \frac{1}{2 \pi i} \int_{\partial D}\frac{f'(z)}{f(z) - w} dz$とおく. $L$は1以上の整数であることを示せ. (ヒント: 偏角の原理 問4.8)
+  \item 上の$w, D$について, $L_{n} :=  \frac{1}{2 \pi i} \int_{\partial D}\frac{f_{n}'(z)}{f_{n}(z) - w} dz$とおく. $L_{n} \to L$ ($n \to + \infty$)であることを示せ (ヒント: ワイエルシュトラスの2重級数定理と問3.1)
+  \item $f(w)=0$となる$w \in \Omega$は存在しないことを示せ.
+ \end{enumerate} 
+    
+\item 次の問いに答えよ.
+%\vspace{-12pt}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 同程度連続・一様有界・正規族の定義を述べよ.
+  \item アスコリ・アルツェラの定理を調べ, その主張を述べよ.
+  \item モンテルの定理とアスコリ・アルツェラの定理を比較せよ. 特にモンテルの定理の仮定とアスコリ・アルツェラの定理の仮定の違いは何か?
+    \end{enumerate} 
+
+\item $$\mathcal{F} := \left\{ f(z) = \sum_{n=0}^{\infty}a_n z^n | \text{$f$は$|a_n| \le n$となる$\D$上の正則関数}\right\}$$
+は正規族であることを示せ.
+  
+%  \item (等角写像) 正則関数は角度を保つ性質がある. この問題はそのことを見る問題である.
+  
+% \item  (シュバルツ・クリストフェル積分) リーマンの写像定理によって, 四角形の内部$(0,1)\times (0,1) \subset \C$を上半平面$\mathbb{H}$に移す正則な全単射が存在する. この正則な全単射はどのような形なのだろうか? 次の問いに答えよ.
+ 
+ 
+ 
+ 
+ 
+ 
+  \end{enumerate} 
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=20mm, width=20mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

@@ -1,0 +1,197 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=20truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 9 補足資料}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{勉強の方法(の一例)}
+
+複素解析続論は難しい内容が多いので, 理解するのが難しいと思います. (楕円関数以後の内容は特に.)
+何から始めていいかわからない人は以下の順番で勉強してもらえば幸いです. 
+
+       \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+    \item 第1-4回の演習問題のうち$^{\bullet}$問題は何も見ずに解けるようにしておく.  これができない人は前期の複素解析から復習するようにしてください. これはできないとまずいです.
+  \item 第5-8回の演習問題で (ノート・教科書・参考書を見ながら)$^{\bullet}$問題を解く. この問題がほぼ全てできていれば, (問題が解けるかはわからないが)複素解析続論を半分くらい理解している方だと思います. 第5回(楕円関数)以後の演習問題の$^{\bullet}$問題を解くのは, はじめのうちは苦労するかもしれません.
+      \item 第1-4回の演習問題のうち6-8割くらい解けるようになる. 実際第1-4回の演習問題は大学院の院試も含むので, これを理解している人は前期の複素解析をきちんと理解していると言えます.
+      \item  第5-8回の演習問題をできるだけ頑張って解く. ただし私が適当に作ったものもあるので, 全て解こうとは思わないでください.  6割くらい解けている人はかなり理解している人だと思います. \footnote{実際, 第5回以後の内容は難しいと思います. 私が学生だったとして7-8割解けるかは怪しいです. 私が学生だったとしても第1-4回の演習問題はほぼ解けていたと思いますが...(本当か?)}
+  \end{enumerate}
+  
+  \vspace{12pt}
+\hspace{-24pt}\underline{演習でできなかった内容}
+
+以下は演習に盛り込めなかった内容です. 参考書のAhlforsやStein-Shakarchiに詳しい内容が載っております.\footnote{Ahlforsはいい本だけどかなり読みづらい! Stein-Shakarchiは演習問題を作る際に参考にしました. かなりいい本だと思います.} 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f' \neq 0$なる1:1正則関数は等角写像(角度を保つ写像)である
+  \item $\mathbb{H}$を長方形に移す全単射正則写像の形(シュバルツ・クリストフェルの定理)
+  \item ゼータ関数の解析接続・自明な零点. 整数論との関連話題.
+  \end{enumerate}
+
+
+
+\vspace{12pt}
+\hspace{-24pt}\underline{複素解析の内容}
+
+演習問題を作っていて気づいたのですが, 複素解析続論の内容はいろんな分野に広がりを持ちます.\footnote{教員の立場で演習問題を作っていてこのことを思い知らされました. 学生のときはよくわからないような...}
+ここでは今後どういう内容があるかをざっくばらんに言っていきます(結構適当なんで合っているかは怪しいところもあります.)
+
+\vspace{12pt}
+楕円関数・楕円曲線
+
+    \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 楕円曲線の有理点 (数論)
+  \item 楕円曲線のモジュライ(トポロジーならタイヒミュラー理論) %代数幾何ならばモジュライ理論?(Deligne-Mumford stackとか?))
+  \item 複素構造と$C^\infty$級構造の違い→小平・スペンサーの変形理論(複素幾何学・代数幾何学)
+  \item 楕円曲線は$\mathbb{C}\mathbb{P}^2$の3次曲線→代数幾何学
+  \item $j$不変量とモンスター群→頂点作用素代数(表現論・作用素環論?)\footnote{確か同期(Yuto Moriwaki at [RIKEN])がこの分野をやっていて, 物理とかも普通に関わるらしい.}
+  \end{enumerate}
+
+   
+シュワルツの補題
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item Yauのシュワルツの補題・双正則断面曲率(微分幾何) %正則断面曲率が負の多様体 (Wu-Yauの定理) (複素微分幾何)
+ \item 小林双曲性・Brody双曲性 (複素幾何)
+   \end{enumerate}
+   
+   劣調和函数
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item 多重劣調和函数・岡潔の理論 (多変数複素解析)
+ \item 特異エルミート計量 (複素代数幾何学) \footnote{一応私の専門分野です...}
+   \end{enumerate}
+   
+リーマンの写像定理
+
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 領域・境界対応 CR多様体 
+  \item 等角写像→共形幾何学?
+   \end{enumerate}
+   
+   \vspace{12pt}
+\hspace{-24pt}\underline{気になる方は...}
+
+次の本は数学の広い領域に渡り専門的な内容について書かれている本です. 自分の分野を決める際の参考にしてください. 
+%そろそろ分野とか決めるのに気になっている方は次の本を見てみてはいかがでしょうか.
+
+\begin{itemize}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item 東京大学出版会  「数学の現在$i$」「数学の現在$\pi$」「数学の現在$e$」
+   \end{itemize}
+また次の本は非常に有益で若いうちから読んでおいた方が良いと思います. 
+\begin{itemize}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 伊原 康隆 「志学数学 -研究の諸段階 発表の工夫-」
+   \end{itemize}
+良い本なのでいろんな人に勧めてください.\footnote{東大の河東先生の書評も面白い. 「今すぐこの本を買ってきて読みなさい」と書いてある.}
+
+
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=20mm, width=20mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

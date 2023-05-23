@@ -1,0 +1,229 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 6 最大値原理・開写像定理}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+%\vspace{12pt}\hspace{-24pt}\underline{ローラン展開・極に関する問題}
+
+\begin{enumerate}[label=\textbf{問}6.\arabic*]
+
+\item $^{\bullet}$ $f$を$|f| \le 1$となる$\D$上の正則関数とする. $f(\frac{1}{2})=1$ならば$f$は定数関数であることを示せ.
+
+\item $^{\bullet}$ $f$を$\D$上の正則関数かつ$\bar{\D}$上で連続な関数とし, $f$は$\D$内で零点を持たないものとする. 
+$|z|=1$上で$|f(z)|$が定数関数ならば, $f$は$\D$上で定数関数であることを示せ. (ヒント: $f, \frac{1}{f}$に最大値原理を用いよ. もしくは最大値原理と最小値原理を用いても良い. )
+%$f$を$\D$上の正則関数かつ$\bar{\D}$上で連続な関数とする.$|z|=1$である任意の$z$について$|f(z)|=0$ならば, $f$は定数関数であることをしめせ.
+
+\item $^{\bullet}$次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item  $p : \R^{2} \rightarrow \R$, $p(x,y)=x$は開写像であるが閉写像ではないことを示せ. 
+\item 開写像定理の主張を述べよ.
+\item $q : \R^{2} \rightarrow \R^2$, $q(x,y)=(x,xy)$は開写像ではないことを示せ.  (つまり「開写像定理」において正則性は必要である.)
+%定数でない$C^{\infty}$級関数で開写像ではないものの例をあげよ. (つまり「開写像定理」において正則性は必要である.)
+    \end{enumerate}  
+   
+
+\item $^{\bullet}$次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $C^{\infty}$級関数$f : \R \rightarrow \R$で単射であるが, ある$a \in \R$があって$f'(a)=0$となるものを一つ構成せよ.
+   \item 「逆関数の正則性」の主張を述べよ.
+\item $C^\infty$級関数$f : \R \rightarrow \R$で全単射であるが$f^{-1}$が$C^{\infty}$級でないものを一つ構成せよ. (つまり「逆関数の正則性」において正則性は必要である.)
+   \end{enumerate}  
+   
+   
+   \item $f$を$\Omega$上の定数でない正則関数とする. $a \in \Omega$があって$f' (a) \neq 0$であるならば, 
+   $a$を含む半径$r > 0$の円板$D$で$f|D : D \rightarrow \C$が単射になるものが存在することを示せ.
+    
+   \item $f$を$\Omega$上の単射な正則関数とし, $\bar{D} \subset \Omega$となる円板$D$とする. 
+   任意の$w \in f(D)$について次を示せ. 
+   $$
+   f^{-1}(w) = \frac{1}{2 \pi i} \int_{\partial D} \frac{zf'(z)}{f(z) - w} dz
+   $$
+   
+   \item $f$を$\D$上の正則関数とする. 次の問いに答えよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 
+  $
+  \lim_{r \to 1} 
+  \left(\sup_{ \theta \in [0 , 2 \pi]} |f(r e^{i \theta})| \right) =0
+  $
+ ならば$f \equiv 0$であることを示せ.
+\item     $
+  \lim_{r \to 1} 
+  \left(\sup_{ \theta \in [0 , \frac{\pi}{2}] } |f(r e^{i \theta})| \right) =0
+  $
+ ならば$f \equiv 0$であることを示せ. (ヒント: $f$をうまく組み合わせて(a)を満たす関数を作れ.)
+%$\theta \in [0, \frac{\pi}{2}]$に対して$|z| \rightarrow 1$とするとき$f$が0に一様収束するならば$f \equiv 0$であることを示せ.
+        \end{enumerate}  
+\item $w_1, \ldots, w_n$を$\C$上の単位円周上$S^1(=\partial \D)$の点とする. 
+次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $\prod_{i=1}^{n} |z - w_i| \ge 1$となる$z \in S^1$が存在することを示せ. 
+\item $\prod_{i=1}^{n} |z - w_i|=1$となる$z \in S^1$が存在することを示せ. 
+     \end{enumerate}  
+     
+     
+     \newpage
+   \item 次の問いに答えよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item (カゾラティ-ワイエルシュトラスの定理) $f$を$\D \setminus \{ 0\}$上の正則関数とする. $f$が$0$で真性特異点を持つならば, $f(\D \setminus \{ 0\})$は$\C$において稠密であることを示せ. \footnote{ヒント: もしそうでないなら, ある点$w \in \C $があって$g(z):=\frac{1}{f(z) - w}$が$\D \setminus \{ 0\}$上で有界となってしまう. これは$f$が$0$で真性特異点を持つことに反する(なぜか?)}
+\item  $f : \C \rightarrow \C$が単射な正則関数ならば, ある$a,b \in\C$があって$f(z) =az +b$であることを示せ. (ヒント: $f(1/z)$を考えよ.)
+       \end{enumerate}  
+\item $^{*}$$\C^{2} \setminus \{ 0\}$について, 同値関係$\sim$を「
+	$
+	z \sim w \Leftrightarrow \text{0でない複素数$\alpha$が存在して$z = \alpha w$}
+	$」
+	と定義する. $ \C\mathbb{P}^{1}:= (\C^{2} \setminus \{ 0\})/\sim$と書き複素射影空間と呼ぶ. 以下$z = (z_{1}, z_{2})$を$\C\mathbb{P}^{1}$の元とみなしたものを$(z_{1}:z_{2})$と書き複素同次座標と呼ぶ.
+$U_{1} = \{ (z_{1}:z_{2}) | z_{1}\neq 0\}, U_{2} = \{ (z_{1}:z_{2}) | z_{2}\neq 0\}$とおき, 
+$$
+\begin{array}{cccccccccc}
+\varphi_{1}: &\C& \rightarrow & U_{1}& &\varphi_{2}: &\C& \rightarrow & U_{2}& \\
+                      &z &\longmapsto &(1:z)&      &                      &w& \longmapsto &(w:1)&
+\end{array}
+$$	
+と定める. 次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\varphi_1, \varphi_2$は全単射であることをしめせ.  また逆写像を各々構成せよ.\footnote{もっと強く同相であるが, 面倒なのでそこまで示さなくても良い.}
+  \item $f : \C\mathbb{P}^{1} \rightarrow  \C$を連続写像とする. $f \circ \varphi_{1}$と$f \circ \varphi_{2}$が共に正則関数であるならば, $f$は定数関数であることを示せ. 
+     \end{enumerate}  
+     
+ \item $^{*}$(開写像定理を用いた代数学の基本定理の証明) $f(z) = z^n + a_1 z^{n-1}+ \cdots + a_{n-1}z + a_n$とし, $n \ge 1, a_n \neq 0$とする.  以下の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $F : \C^2 \rightarrow \C^2$を$F(z,w) = (z^n + a_1 z^{n-1}w+ \cdots +a_{n-1}zw^{n-1} + a_n w^n, w^n )$とすると, $F$は連続写像$\tilde{F} : \C\mathbb{P}^{1} \to \C\mathbb{P}^{1} $を誘導することを示せ. 
+\item $f(\C)$は閉集合であることをしめせ.
+\item $f(\C)=\C$を示せ. これより$f(\alpha)=0$なる$\alpha \in \C$は存在する.
+      \end{enumerate}  
+
+   \item (ルーシェの定理)
+   $f,g$を$\Omega$上の正則関数, $D \subset \Omega$を円板, $C = \partial D$を円周とする.
+   $C$上で$|f(z)| > |g(z)|$ならば, $f$と$f+g$は$D$内で(重複度込みで)同じ個数の零点を持つことを示せ.
+   (ヒント: $t \in [0,1]$について$n_{t} : = \frac{1}{2 \pi i} \int_{C} \frac{f' + t g'}{f +t g} dz$とすると$n_t$が$[0,1]$上の整数値連続関数であることを示せ. 授業の開写像定理の証明も参考にせよ.)
+   
+ %  \item ルーシェの定理を用いて代数学の基本定理を示せ.
+   
+   \item $z^4 - 6z + 3=0$は$1 < |z| < 2$内に何個の解を持つか?
+ 
+   
+   \item $^{*}$ $|z| \le 3$の近傍で定義された正則関数$f(z)$で$|z|=3$上では零点を持たないものとする. 
+   $f$が次の3条件を満たすとき, $f(z)$の$|z |<3$における零点を全て求めよ.
+   $$
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{f'(z)}{f(z)} dz =2, \quad
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{zf'(z)}{f(z)} dz =2, \quad
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{z^2f'(z)}{f(z)} dz =-4 
+   $$
+
+ 
+     \end{enumerate}  
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=20mm, width=20mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}

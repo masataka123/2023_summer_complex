@@ -1,0 +1,388 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 5 楕円関数}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{はじめに}
+
+\hspace{-12pt}複素解析続論に関して, 楕円関数以降の内容はかなり難易度が高いと思います.\footnote{正直いうと私も復習するまでまあまあ忘れていました. 主張だけは覚えていたもの(リーマンの写像定理)や主張すら忘れていたものなど多くあります. 学部時代は私は複素解析続論の内容にあまり興味がなかったので, なんとなくの理解しかないです...(授業中も適当にノート取って, アティマクの演習問題解いてました.) }
+個人的には第4回演習の内容をきっちり理解すること, そしてその後に第5回以降の内容を(努力できる範囲で)理解することをお勧めします. (かなり難しい問題も入っているので, 全部解こうとは思わないでください. 教科書や参考書なども参考にしながら解いてください.)
+
+
+\vspace{12pt}
+\hspace{-24pt}\underline{ペー関数に関する問題}
+
+\hspace{-12pt}以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+\hspace{-12pt}%任意の$z \in \Omega$について$-z \in \Omega$となる領域$\Omega$上の関数$f(z)$について, 
+$f(-z)=f(z)$となる関数を\underline{偶関数}といい, $f(-z)=-f(z)$となる関数を\underline{奇関数}という.
+
+\hspace{-12pt}$\omega_1, \omega_2 \in \C$を$\frac{\omega_2}{\omega_1} \not \in \R$となる複素数とする. $L := \{ m\omega_1 + n \omega_2 | m,n\in \Z\}$とし, ワイエルシュトラスのペー関数$\wp(z)$を以下の通りとする. 
+$$\wp(z) := \frac{1}{z^2} + \sum_{w \in L \setminus \{ 0\}}\left(\frac{1}{(z-w)^2} - \frac{1}{w^2}\right)
+= \frac{1}{z^2} + \sum_{(m,n) \in  \Z^2 \setminus \{ (0,0)\}}\left(\frac{1}{(z-m\omega_1 - n \omega_2)^2} - \frac{1}{(m\omega_1 + n \omega_2)^2}\right)
+$$
+
+
+
+\begin{enumerate}[label=\textbf{問}5.\arabic*]
+
+\item $^{\bullet}$  ワイエルシュトラスのペー関数の定義を書け. ただし発表時にノートなどを見てはいけない. またこの問題は一回以下の発表者のみ回答できる. (この問題は救済問題です. 配点は非常に低いです. )
+
+ \item$^{\bullet}$ $\D$上の正則関数$f(z)$が奇関数であるとき
+ $z=0$でのテーラー展開を
+ $$
+ f(z) = a_0 + a_1 z + a_2 z^2 + \cdots
+ $$
+ とすると, $a_0=a_2=a_4= \cdots =0$であることを示せ.
+ 
+ \item $^{\bullet}$  任意の$z \in \C$について$f(z)=f(z+1)=f(z+i)$となるような$\C$上の正則関数$f(z)$を全て求めよ. 
+ \item $^{\bullet}$ ワイエルシュトラスのペー関数$\wp(z)$が$z=0$で2位の極を持つことと, 偶関数であることを示せ.  \footnote{授業の内容を自分なりに要約して答えること. 授業の板書通りを丸写しした場合は不正解とする. }
+ 
+ \item (授業の内容) $r>0$を実数とする. $|z| < r$, $|w| > 2r$となる複素数$z, w$について次を示せ.
+ $$\left|\frac{1}{(z - w)^2} - \frac{1}{w^2} \right| < \frac{10 r }{|w|^3}$$
+
+ 
+ \item (授業の内容) $m,n$を整数とし
+ $$
+ K_{m,n}:= \left\{ (x,y) \in \R^2 | m - \frac{1}{2} \le x \le m +\frac{1}{2} , n- \frac{1}{2} \le y\le n +\frac{1}{2} \right\}
+$$
+とおく. 次を示せ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $(m,n) \neq (0,0)$ならば
+  $$ \frac{1}{(\sqrt{m^2 + n^2})^3} \le \iint_{K_{m,n}} \frac{8}{(\sqrt{x^2 + y^2})^3} dxdy$$
+  \item $$\sum_{(m,n) \in  \Z^2 \setminus \{ (0,0) \}}\frac{1}{(\sqrt{m^2 + n^2})^3} < \infty$$
+    \end{enumerate}  
+\item 次の式を示せ.
+$$\sum_{(m,n) \in  \Z^2 \setminus \{ (0,0) \}}\frac{1}{m^2 + n^2} = +\infty$$
+
+ \item 
+$\wp(z)$の原点におけるローラン展開を$\wp(z) = \frac{1}{z^2} + a_2 z^2 + a_4 z^4 + \cdots$とするとき, 次を示せ.
+ $$
+ a_2 = 3 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}, \quad
+ a_4 = 5 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}
+ $$
+ また
+ $g_2 = 60\sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}$,
+ $g_3=140 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}$とおくとき, 授業でやったことを用いて次の式を示せ.
+ $$
+ (\wp'(z))^2 = 4 \wp(z)^3 - g_2 \wp (z) - g_3
+ $$
+ 
+ \item $\wp''(z) - 6 \wp(z)^2$は定数関数であることを示せ. またその定数は何か?
+ \item $\alpha \in \C$について, 周期平行四辺形にある$z$で$\wp(z)=\alpha$を満たすものの個数は(零点の重複度をこめて)2であることを示せ. (ヒント: $\frac{\wp'(z)}{\wp(z) - \alpha}$を考える.)
+% また$z,z'\in \C$が$\wp(z)=\wp(z')$であるならば, $z \pm z' \in L$であることを示せ.
+ 
+ \item $^{*}$次の問いに答えよ
+ \begin{enumerate}
+ \item 周期平行四辺形にある$z$について, $\wp'(z)$の極は$L$の点であり, $\wp'(z)$の零点は$ \frac{\omega_1}{2},  \frac{\omega_2}{2},  \frac{\omega_1+\omega_2}{2}$であることを示せ.
+ \item $\wp(z)=\wp(z')$であるならば, $z \pm z' \in L$であることを示せ.
+ \item $e_1 = \wp(\frac{\omega_1}{2}), e_2 = \wp(\frac{\omega_2}{2}), e_3 = \wp( \frac{\omega_1+\omega_2}{2})$とすると, これらは互いに異なり, 次を満たすことを示せ.
+ $$
+  (\wp'(z))^2 = 4 (\wp(z)-e_1)(\wp(z)-e_2)(\wp(z)-e_3)
+ $$
+ \end{enumerate}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{楕円関数の問題}
+
+  \item $\omega$を楕円関数$f(z)$の一つの周期とする.\footnote{つまり任意の$z \in \C$について$f(z + \omega) = f(z)$となるもの}次を示せ. 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $f(z)$が奇関数ならば$f(\frac{\omega}{2})=0$.
+ \item $f(z)$が偶関数で$f(\frac{\omega}{2})=0$ならば, $z = \frac{\omega}{2}$での$f$の零点の位数は2以上である. 
+      \end{enumerate}  
+   
+   
+   \newpage
+   
+   
+\item$^{*}$  %\ref{pfunction}のように$\omega_1, \omega_2, \wp$をとる. 
+$f(z)$を$\omega_1, \omega_2$を周期とする楕円関数とする. 次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 周期平行四辺形を$H$とする. $\alpha \in \C$を$\alpha \not \in f(\partial H)$かつ$\alpha \not \in f ((f')^{-1}(0))$となるものとする. $f(z)$が偶関数ならば, $f(z)=\alpha$は$H$内に相異なる偶数個の解を持つことを示せ. 
+ \item $f(z)$が偶関数ならば, ある有理式$R(x)$があって, $f(z) = R(\wp(z))$となることを示せ. (ヒント: (a)のような$\alpha, \beta$をとり, $\frac{f(z) - \beta}{f(z) - \alpha}$を$\wp$を用いて表せ.)
+ \item $f(z)$は偶関数と奇関数の和で常に表せることを示せ.
+ \item ある有理式$R_1, R_2$があって, $f(z) = R_1(\wp(z)) + \wp' (z)R_2(\wp(z))$とかけることを示せ.
+  \end{enumerate}  
+ ここで複素係数多項式$P(x), Q(x)$を用いて表せる$R(x) = \frac{P(x)}{Q(x)}$を\underline{有理式}という.
+      
+\item \label{divisor}$^{*}$ %\ref{pfunction}のように$\omega_1, \omega_2, \wp, L$をとる. 
+$f(z)$を$\omega_1, \omega_2$を周期とする楕円関数とし, $H$を周期平行四辺形とする. ただし$H$の境界上に$f$の極や零点はないものとする. 次の問いに答えよ. 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\frac{1}{2 \pi i} \int_{\partial H} \frac{z f'(z)}{f(z)} dz$は$L$の元であることをしめせ.\footnote{ただし第8回演習問題の内容を用いて良い}
+  \item $f$の$H$内の零点を$a_1, \ldots, a_s$とし$H$内の極を$b_1, \ldots, b_t$とする. 
+  $m_i$を$f$の$a_i$での零点の位数とし, $n_j$を$b_j$の極の位数とする. $\sum_{i=1}^{s}m_i - \sum_{j=1}^{t}n_j$の値を求めよ. 
+  \item $\sum_{i=1}^{s}m_ia_i - \sum_{j=1}^{t}n_jb_j $は$L$の元であることを示せ. %\footnote{この式は代数多様体の因子への応用がある. Harthorne Chapter2参照のこと.}
+
+ \end{enumerate}  
+  
+%\end{enumerate}        
+     
+     
+     
+  
+     
+\vspace{12pt}
+\hspace{-24pt}\underline{個人的に気になった問題}     
+     
+以下の問題は個人的に気になった話題である.
+ そもそもなぜワイエルシュトラスのペー関数$\wp(z)$を勉強するのだろうか?\footnote{この関数を考える意味がそもそもあるのかと思うかもしれない} 
+ 以下の問題群はワイエルシュトラスのペー関数$\wp(z)$を勉強する一つの理由を与えるものである.
+ %\footnote{すみません, 私も不勉強だったので, この演習問題を通して勉強することにしました. }
+ この問題群は余裕のある人がやってください. また未定義な用語がある(かもしれない)のでそこは各自調べてください. 
+ 
+ 以下$\mathbb{H} := \{ \tau \in \C | Im(\tau)>0\}$とする.
+%\begin{enumerate}[label=\textbf{問}5-Ex.\arabic*]
+\item $^{*}$$\omega_1, \omega_2 \in \C$を$\frac{\omega_2}{\omega_1} \not\in \R$かつ$\frac{\omega_2}{\omega_1} \in \mathbb{H}$となる複素数とする. (のちの$\omega'_1, \omega'_2$も同様である.)
+$$L :=\Z  \omega_1 + \Z \omega_2=\{ m\omega_1 + n \omega_2 | m,n\in \Z\}$$
+とする($\C$の格子と呼ばれる.)
+この問題は「複素1次元トーラス$\C/\Z  \omega_1 + \Z \omega_2$と$\C/\Z  \omega'_1 + \Z \omega'_2$がいつ双正則になるか?」について考える問題である. \footnote{$M$と$N$が双正則とは, 正則な全単射$f : M \to N$が存在すること(このとき正則な逆写像$g : N \to M$も存在する.) ただし厳密に定義するには複素多様体の概念を用いる必要がある.  }
+次の問いに答えよ.
+ \begin{enumerate}
+\item $\C$の集合として$\Z  \omega_1 + \Z \omega_2= \Z  \omega'_1 + \Z \omega'_2$となるための必要十分条件は, ある整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$が存在して$\det A =1$かつ
+$
+\begin{pmatrix}
+\omega'_1\\
+\omega'_2 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}
+\begin{pmatrix}
+\omega_1\\
+\omega_2 \\
+\end{pmatrix}
+\text{である.}
+$
+\item $\tau := \frac{\omega_2}{\omega_1}$とする. $F: \C \rightarrow \C$を$F(z) = \frac{z}{\omega_{1}}$とするとき, ある同相写像
+$\tilde{F} : \C/\Z  \omega_1 + \Z \omega_2 \rightarrow \C/\Z  + \Z \tau $が存在して次の可換図式を満たすことを示せ.
+\begin{equation*}
+\xymatrix@C=40pt@R=20pt{
+\C \ar@{->}[r]^{F} \ar@{->}[d]^{\pi}&\C \ar@{->}[d]^{\pi_1}\\ 
+\C/\Z  \omega_1 + \Z \omega_2 \ar@{->}[r]^{\tilde{F}} &\C/\Z  + \Z \tau  \\ 
+ }
+ \end{equation*}
+ ただし, $\pi,\pi_1$は商写像とする. (実はもっと強く双正則であることが言える.) よって以後$\omega_1, \omega_2$ではなく$\tau \in \mathbb{H}$を考えれば良い.
+ %\footnote{実は$\tilde{F}$は双正則写像であることがわかっている. ただしそれを示すには"複素多様体"を学ばないといけないので割愛する.}
+
+\item $\tau_1, \tau_2 \in \mathbb{H}$とする. $G: \C/\Z  + \Z \tau _1 \to  \C/\Z  + \Z \tau _2 $が双正則ならば,
+\begin{equation*}
+\xymatrix@C=40pt@R=20pt{
+\C \ar@{->}[r]^{\hat{G}} \ar@{->}[d]^{\pi_1}&\C \ar@{->}[d]^{\pi_2}\\ 
+\C/\Z  + \Z \tau _1 \ar@{->}[r]^{G} &\C/\Z  + \Z \tau _2 \\ 
+ }
+ \end{equation*}
+ となるような全単射正則写像$\hat{G}: \C \rightarrow \C$が存在することがわかっている. 
+ %このとき$\alpha \in \Z  + \Z \tau _2 $があって$\hat{G} = \alpha z$となることを示せ.
+ このことを用いて, $\C/\Z  + \Z \tau _1$と$\C/\Z  + \Z \tau _2 $が双正則になるならば,
+ ある整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$が存在して$\det A =1$かつ
+$\tau_1 = \frac{a \tau_2 +b}{c \tau_2 +d}$となることを示せ. 
+  \footnote{ただし第6回演習問題の内容を証明せずに用いても良い}
+  実は(b)と同じ議論で逆も言える.
+  \item $$
+M=\{\tau \in \mathbb{H} | -\frac{1}{2} \le Re(\tau) < \frac{1}{2}, |\tau| \ge 1, \text{$-\frac{1}{2} < Re(\tau)<0$ならば$\tau>1$}
+\}
+$$
+とする. $M$を図示せよ. ($M$は複素１次元トーラスのすみかとも思える.) \footnote{$M$の点は複素１次元トーラス全体を双正則で割った集合と思える．$M$は複素1次元トーラスのなるモジュライ空間とも呼ばれる. }
+ \item 任意の$\tau_1, \tau_2 \in \mathbb{H}$について, $\C/\Z  + \Z \tau _1$と$\C/\Z  + \Z \tau _2 $は同相であることを示せ. つまり同相であっても双正則でないことが起こる.\footnote{もっと強く実は$C^{\infty}$級同型はいえる. つまり$C^{\infty}$級では同じでも複素構造は違うものがあると言うことである. これを詳しく調べたのが小平邦彦とD.C.スペンサーであり, のちに小平・スペンサーの変形理論につながる. ちなみに小平邦彦は日本人初のフィールズ賞受賞者である. }
+ \end{enumerate}
+
+
+ \item $^{*}$ \label{embedding} $\tau \in \mathbb{H}$について
+$$ g_2(\tau) = 60\sum_{(m,n) \in \Z^2 \setminus \{ (0,0)\} }\frac{1}{(m+ n \tau)^4}
+\quad
+ g_3(\tau)=140 \sum_{(m,n) \in \Z^2 \setminus \{ (0,0)\} }\frac{1}{(m+ n \tau)^6} 
+ $$とし, $e_1 = \wp(\frac{1}{2}), e_2 = \wp(\frac{\tau}{2}), e_3 = \wp( \frac{1+\tau}{2})$とする.
+ %$\omega_1, \omega_2 \in \C$を$\frac{\omega_1}{\omega_2} \in \R$かつ$Im(\frac{\omega_1}{\omega_2})>0$となる複素数,  $g_2,g_4,e_1,e_2,e_3$をこの演習問題に出てきた通りとする. 
+ %$g_2 = 60\sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}$, $g_4=140 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}$とおく.
+ この問題は「複素1次元トーラスは代数多様体である」ことを見る問題である. (一部分講義で触れた内容を含む.)
+ $$M = \{ (x:y:z) \in \C \mathbb{P}^2 | y^2z = 4x^3 - g_2 x z^2- g_3 z^3 \}$$とおくとき, 次の問いに答えよ. 
+ \begin{enumerate}
+%\item $g_{2}^{3} - 27 g_{3}^{2} = 16\prod_{1 \le i< j \le 3}(e_i - e_j)^2 \neq 0$をしめせ. (これより$M$が複素多様体になる. )
+\item  同相写像$f: \C/\Z  \omega_1 + \Z \omega_2 \rightarrow  M$を一つ構成せよ.
+\footnote{自然に構成していればこれは双正則になる. つまり$\C/\Z+ \Z \tau $から$\C \mathbb{P}^2$への正則埋め込みを具体的に記述したことになる. 専門的な用語で言うと「$3P$がvery ampleである」}
+\footnote{難しければ$f: (\C/\Z  + \Z \tau) \setminus \{ 0\} \rightarrow  M \setminus \{ (0 : 1: 0)\}$なる同相写像でも良い.}
+\item $\wp : \C/(\Z  \omega_1 + \Z \omega_2) \setminus  \{ 0\}\rightarrow \C $を考える. ある$\C$の3点$\alpha_1,\alpha_2,\alpha_3$を除いて, $\wp^{-1}(w)$の個数は2であることを示せ. またある3点$\alpha_1,\alpha_2,\alpha_3$を求めよ.\footnote{本当は$\wp : \C/(\Z  \omega_1 + \Z \omega_2) \to \C\mathbb{P}^1$にすれば$\C\mathbb{P}^1$の$\infty$に対応する点も"例外"になり, 全4点が変な点となっていることがわかる. なぜ4点なのかは, リーマン・フルビッツの定理から出る. なおこの写像は$M \to \C\mathbb{P}^1$ $(x:y:z) \mapsto (x:z)$に"ほぼ"対応する.(ただし$(0:1:0)$だけ$(1:0)$に送るようにする.) この場合にも変な点4点を全て決定してみよ.} 
+\item $\lambda = \frac{e_3 - e_2}{e_1 - e_2}$とおく. \ref{j_invariant}の$j$不変量は, ある実数$c \in \R$があって
+$$
+j(\tau ) = c \frac{(1 - \lambda + \lambda^2)^3}{\lambda^2 (1 - \lambda)^2}
+$$
+となることを示せ. またそのような定数$c \in \R$を求めよ. \footnote{$y^2 z = 4(x - e_1 z)(x - e_2 z) (x - e_3 z)$なので, $j$不変量は標数$p$の楕円曲線でも定義ができる. 詳しくはHartshorne Chapter 4参照のこと. }
+ただし$g_{2}^{3} - 27 g_{3}^{2} = 16\prod_{1 \le i< j \le 3}(e_i - e_j)^2 \neq 0$は証明なしに用いて良い.
+ \end{enumerate}
+ 
+ 
+\item $^{*}$ \label{j_invariant} 引き続き\ref{embedding}の記号を用いる. 
+$j$不変量を
+$$
+j(\tau):= 1728\frac{g_{2}^{3}}{g_{2}^{3} - 27 g_{3}^{2}}
+$$
+と定義する. この問題は「$j$不変量と複素1次元トーラスの関係を見る」問題である.\footnote{$j$関数は$q=exp(2 \pi i \tau)$として$j(z)$を展開すると
+$$
+j(\tau) = \frac{1}{q} + 744+ 196884 q + \cdots 
+$$
+となる．一方モンスター群と呼ばれる"単純群(自明でない正規部分群を持たない群)で例外かつ一番大きい位数を持つもの(位数$2^{46} \cdot 3^{20}\cdot 5^9 \cdot 7^6\cdot11^2\cdot13^3\cdot17\cdot19\cdot23\cdot29\cdot31\cdot41\cdot47\cdot59\cdot71$)"
+の既約表現の次元は$1,196883,\cdots$である． なんと$196884 = 196883 +1$が成り立つのである. これは偶然だと思われるかもしれないが, 実は高い次数でも似たようなことが成り立つのである.(ムーンシャイン予想と呼ばれる) 1992年にR.ボーチャーズはムーンシャイン予想を解決し, その業績でフィールズ賞を取った.
+}
+次の問いに答えよ
+\begin{enumerate}
+\item $A$を整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$で$\det A =1$となるものとするとき, 以下を示せ.
+$$
+g_2\left(\frac{a \tau + b}{c \tau + d}\right) = (c \tau + d)^4 g_2(\tau), 
+g_3\left(\frac{a \tau + b}{c \tau + d} \right) = (c \tau + d)^6 g_3(\tau), 
+$$
+また$j(\frac{a \tau + b}{c \tau + d}) = j(\tau)$をしめせ．
+\item $\tau_1, \tau_2 \in \mathbb{H}$について, $\C/\Z + \Z \tau_1$と$\C/\Z + \Z \tau_2$が双正則ならば, $j(\tau_1) = j(\tau_2)$であることを示せ.
+\item $j(\tau_1) = j(\tau_2)$であるならば, ある$t \in \C$があって, $ g_2(\tau_2) = t^4 g_2(\tau_1), g_3(\tau_2) = t^6 g_3(\tau_1) $
+となることを示せ.
+\item \ref{embedding}(a)を用いて, $j(\tau_1) = j(\tau_2)$であるならば, $\C/\Z + \Z \tau_1$と$\C/\Z + \Z \tau_2$が双正則であることを示せ. 
+%\item $$M=\{\tau \in \mathbb{H} | -\frac{1}{2} \le Re(\tau) < \frac{1}{2}, |\tau| \ge 1, \text{$-\frac{1}{2} < Re(\tau)<0$ならば$\tau$>1}\}$$とする. $M$を図示せよ. \item 任意の$\tau \in \mathbb{H}$について, $\tau' \in M$が一意に存在して, $j(\tau)=j(\tau')$となることを示せ. \footnote{これより$M$の点は複素１次元トーラス全体を正則同型で割った集合と思える．$M$は複素1次元トーラスのなるモジュライ空間とも呼ばれる. }
+%\item $M$は1次元トーラスのなす空間
+%\item $\lambda = \frac{e_3 - e_2}{e_1 - e_2}$とおくとき,$j (\tau) = 256\frac{(1 - \lambda + \lambda^2)^3}{\lambda^2 (1- \lambda)^2}$となることを示せ.
+\end{enumerate}
+
+
+ \item $^{*}$
+ この問題は「フェルマーの最終定理などの教科書で一度は聞いたことがある, 3次曲線上の点同士の謎の足し算」に関する問題である. 
+ %\footnote{この問題は前年度の演習問題にもあった. 演習問題にしては難易度高いと思う.}
+ $a, b, a+b, a-b$がどれも$L$に入らない相異なる複素数$a, b$を考え,  
+ $$
+ f_{a,b}(z) := 
+ \begin{vmatrix}
+ \wp(z) & \wp'(z)& 1\\
+ \wp(a) & \wp'(a)& 1\\
+  \wp(b) & \wp'(b)& 1\\
+ \end{vmatrix}
+ $$
+とする. 次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f_{a,b}(z)$の極と位数を求めよ.
+  \item $f_{a,b}(-a-b)=0$を示せ. (ヒント: \ref{divisor})
+ \item $\C^2$上の3点$(\wp(a), \wp'(a))$, $(\wp(b), \wp'(b))$, $(\wp(-a-b), \wp'(-a-b))$は一直線上にあることを示せ. ここで3点が一直線上にあるとは, ある複素数$C,D$があって$y=Cx + D$を3点とも満たすこととする. \footnote{$C,D$は複素数で良い. (複素)一直線と呼んだ方が正確?}
+ \item 3次曲線$y^2 = 4 x^3 + Ax +B$と直線$y=Cx + D$が相異なる3点$(x_1, y_1), (x_2,  y_2), (x_3, y_3)$で交わるとする. このとき$x_3$を$x_1, y_1, x_2, y_2$を用いて表せ.
+ \item 次の式(加法定理)を示せ.
+ $$
+ \wp(a+b) = - \wp(a) - \wp(b) + \frac{1}{4} \left( \frac{\wp'(a) - \wp'(b)}{\wp(a) - \wp(b)}\right)^2
+ $$
+  \end{enumerate}         
+    
+  \end{enumerate}     
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+  
+ \end{document}
