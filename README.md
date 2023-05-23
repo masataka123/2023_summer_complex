@@ -98,6 +98,9 @@
 
 -  (2023/07/25). 休講(予定)
 
+[上の演習問題全てを集めたpdf](https://github.com/masataka123/2023_summer_complex/blob/master/material/0_複素解析続論_演習問題.pdf)
+
+
 
 
 <!--

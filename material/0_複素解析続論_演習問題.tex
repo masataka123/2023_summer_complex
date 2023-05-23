@@ -1,0 +1,1299 @@
+\documentclass[dvipdfmx,a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[dvipdfmx]{hyperref} %リンクを有効にする
+\usepackage{url} %同上
+\usepackage{amsmath,amssymb} %もちろん
+\usepackage{amsfonts,amsthm,mathtools} %もちろん
+\usepackage{braket,physics} %あると便利なやつ
+\usepackage{bm} %ラプラシアンで使った
+\usepackage[top=30truemm,bottom=25truemm,left=25truemm,right=25truemm]{geometry} %余白設定
+\usepackage{latexsym} %ごくたまに必要になる
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{otf} %宗教上の理由でmin10が嫌いなので
+
+
+\usepackage[all]{xy}
+\usepackage{amsthm,amsmath,amssymb,comment}
+\usepackage{amsmath}    % \UTF{00E6}\UTF{0095}°\UTF{00E5}\UTF{00AD}\UTF{00A6}\UTF{00E7}\UTF{0094}¨
+\usepackage{amssymb}  
+\usepackage{color}
+\usepackage{amscd}
+\usepackage{amsthm}  
+\usepackage{wrapfig}
+\usepackage{comment}	
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{pxrubrica}
+\usepackage{enumitem}
+\usepackage{mathrsfs} 
+
+\setstretch{1.2}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}} 
+\newcommand{\D}{\mathbb{D}} 
+%\newcommand{\H}{\mathbb{H}} 
+\newcommand{\Sin}{\text{Sin}^{-1}} 
+\newcommand{\Cos}{\text{Cos}^{-1}} 
+\newcommand{\Tan}{\text{Tan}^{-1}} 
+\newcommand{\invsin}{\text{Sin}^{-1}} 
+\newcommand{\invcos}{\text{Cos}^{-1}} 
+\newcommand{\invtan}{\text{Tan}^{-1}} 
+\newcommand{\Area}{\text{Area}}
+\newcommand{\vol}{\text{Vol}}
+\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\tiny{#1}}}}
+\newcommand{\sgn}{{\rm sgn}}
+%\newcommand{\rank}{{\rm rank}}
+
+
+
+   %当然のようにやる．
+\allowdisplaybreaks[4]
+   %もちろん．
+%\title{第1回. 多変数の連続写像 (岩井雅崇, 2020/10/06)}
+%\author{岩井雅崇}
+%\date{2020/10/06}
+%ここまで今回の記事関係ない
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem{lem}[thm]{補題}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{cor}[thm]{系}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{rem}[thm]{注意}
+\newtheorem{exa}[thm]{例}
+\newtheorem{conj}[thm]{予想}
+\newtheorem{prob}[thm]{問題}
+\newtheorem{rema}[thm]{補足}
+
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Vol}{Vol}
+ \newcommand{\pdrv}[2]{\frac{\partial #1}{\partial #2}}
+ \newcommand{\drv}[2]{\frac{d #1}{d#2}}
+  \newcommand{\ppdrv}[3]{\frac{\partial #1}{\partial #2 \partial #3}}
+
+
+%ここから本文．
+\begin{document}
+%\maketitle
+
+\begin{center}
+{\Large 1　正則性}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とする.
+
+\begin{enumerate}[label=\textbf{問}1.\arabic*]
+
+\item$^{\bullet}$次の問いに答えよ.
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 「複素数$a_n$からなる級数$\sum_{n=1}^{\infty} a_n$が絶対収束する」ことの定義を述べよ.
+  \item 複素数$a_n$からなる級数$\sum_{n=1}^{\infty}  a_n$が絶対収束するとする. このとき全単射$f : \N \rightarrow \N$について, $\sum_{n=1}^{\infty}  a_{f(n)} $も絶対収束して極限値は$\sum_{n=1}^{\infty}  a_n$であることを示せ.
+\end{enumerate}
+
+\item$^{\bullet}$次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 「$\Omega$上の関数列$f_{n}$が$\Omega$上の関数$f$に一様収束する」ことの定義を述べよ. 
+  \item $\Omega$上の関数列$f_{n}$と$\Omega$上の関数$f$であって, 任意の$z \in \Omega$について$\lim_{n \rightarrow \infty} f_n(z) =f(z)$であるが, $f_{n}$が$f$に一様収束しない例をあげよ. 
+  \item $\Omega$上の関数列$f_{n}$が$\Omega$上の関数$f$に一様収束すると仮定する. 任意の自然数$n$について$f_{n}$が$\Omega$上で連続ならば, $f$も$\Omega$上で連続であることを示せ.
+      \end{enumerate}
+
+
+\item $^{\bullet}$(コーシー・リーマン方程式)$f(z)$を$\Omega$上の複素数値$C^{\infty}$級関数とする．
+$z = x + iy \in \C$とし$f(z)$を$(x,y)$の関数$f(x,y)$と考え, 
+$
+f(x,y) = u(x,y) + i v(x,y)
+$
+とおく． ($u,v$は実数値$C^{\infty}$級関数とする.)
+次は同値であることを示せ.
+%\footnote{必要ならばコーシー・リーマン方程式を用いて良い.}
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z)$は$\Omega$上で正則である.
+  \item $\pdrv{u}{x} = \pdrv{v}{y}$ かつ $\pdrv{v}{x} = - \pdrv{u}{y}$が成り立つ.
+\end{enumerate}
+
+
+  
+ \item $^{\bullet}$次の関数は正則関数であるか判定せよ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z) = \bar{z}$
+   \item $f(z) = |z|^2$
+    \item $f(z) = \frac{1}{z}$ (ただし定義域は$\C \setminus \{ 0\}$とする.)
+ \end{enumerate}
+ 
+ \item $f(z)$を$\C$上の正則関数とする. このとき$g(z) = \overline{f(\bar{z})}$もまた$\C$上の正則関数であることを示せ. 
+
+\item $f(z)$を$\Omega$上の正則関数とする. 任意の$z \in \Omega$について$f'(z)=0$となるならば$f$は定数関数であることを示せ.
+
+
+
+\item \label{delbar}$z = x + iy \in \C$として複素偏微分を次で定義する.
+$$
+\pdrv{}{z} := \frac{1}{2} \left(\pdrv{}{x}  - i \pdrv{}{y} \right), \quad
+\pdrv{}{\bar{z}} := \frac{1}{2} \left(\pdrv{}{x}  + i \pdrv{}{y}\right)
+$$
+
+$f(z)$を$\Omega $上の$C^{\infty}$級関数とするとき, 次は同値であることを示せ.
+%\footnote{必要ならばコーシー・リーマン方程式を用いて良い.}
+\begin{enumerate}
+    \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(z)$は$\Omega$上で正則である.
+  \item $\Omega$上で$\pdrv{f}{\bar{z}}  \equiv 0$.
+\end{enumerate}
+
+\item 引き続き\ref{delbar}の通りの記号を用いる. 次の問いに答えよ. 
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item  $f(z)$を$\Omega$上の正則関数とするとき, $f'(z)=\pdrv{f}{z}$であることを示せ.
+\item $f(z)$を$\Omega$上の$C^{\infty}$級関数とするとき, 次を示せ.
+$$\pdrv{}{z}\pdrv{}{\bar{z}} f(z) = \frac{1}{4}\left(\pdrv{}{x^2} + \pdrv{}{y^2} \right) f(z)$$
+ \end{enumerate}
+ 
+
+ \end{enumerate}
+
+ 
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=25mm, width=25mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+\newpage
+
+
+\begin{center}
+{\Large 2 コーシーの積分定理・リウヴィユの定理・留数計算}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とする.
+また$|z|=a$となる円周の向きは反時計回りで入れるものとする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{コーシーの積分定理に関する問題}
+
+\begin{enumerate}[label=\textbf{問}2.\arabic*]
+
+
+
+\item $^{\bullet}$ $f(z)$を$\D= \{ z \in \C | |z|<1\}$上の正則関数とする.
+ $0 < r<1$とし, $M$を$|z|=r$における$|f(z)|$の最大値とするとき, $|f'(0)| \le \frac{M}{r}$であることを示せ.
+ 
+
+\item $^{\bullet}$ $|\alpha|\neq 1$となる複素数$\alpha$について, 線積分$\int_{|z|=1} \frac{1}{z-\alpha} dz $を計算せよ.
+
+
+\item $^{\bullet}$ 線積分$\int_{|z|=2} \frac{1}{z^2 + 1} dz $を計算せよ. 
+\item  線積分$\int_{|z-1|=1} \frac{e^z}{z^4 + 1} dz $を計算せよ. 
+\item $n$を整数とする. 線積分$\int_{|z|=2} \frac{z^n}{1-z} dz $を計算せよ. 
+\item $P(z)$を$z$に関する複素係数多項式とする. 線積分$\int_{|z|=2} \overline{P(z)} dz $を計算せよ. 
+
+
+ 
+ 
+ \vspace{12pt}
+\hspace{-36pt}\underline{リウヴィユの定理に関する問題}
+
+\item$^{\bullet}$ (代数学の基本定理) リウヴィユの定理を用いて「定数でない複素係数多項式は複素数体上で解を持つ」ことを示せ. 
+
+ \item $^{\bullet}$ $f(z)$を$\C$上の正則関数とする. ある$M>0$があって$\C$上で$|f(z)| \le M e^{{\rm Re}z}$となるならば
+ $f(z) = a e^{z}$となる$a \in \C$が存在することを示せ. 
+ 
+ \item $\C$上の正則関数$f$について, ${\rm Re}(f)$が下に有界であるならば, 定数関数であることを示せ. 
+
+ \item $f$を$\C$上の定数でない正則関数とするとき, $f(\C)$は$\C$上稠密であることを示せ. 
+ 
+ 
+
+ 
+% 留数計算の問題
+ 
+ \vspace{12pt}
+\hspace{-36pt}\underline{計算問題(標準的な積分経路をするもの)}
+
+ 
+ \item  $^{\bullet}$ 広義積分$\int_{ - \infty}^{\infty}\frac{1}{x^4+ 1} dx$は収束することを示し, その値を求めよ.
+    
+  \item $^{\bullet}$  広義積分$\int_{ - \infty}^{\infty}\frac{1}{(x^2+ 1)^{2}} dx$は収束することを示し, その値を求めよ.
+  
+ \item $a \in \R$について$\int_{- \infty}^{\infty}\frac{e^{-iax}}{x^2+1} dx$の値を求めよ. また$\int_{0}^{\infty}\frac{\cos x}{x^2 + 1} dx$の値を求めよ.
+ 
+  \item $\int_{0}^{\infty} \frac{\log x}{(x^2 + 1)^2} dx$の値を求めよ. ($\log z$の扱いに注意せよ.)
+
+ \item $a \in \R$について $\int_{- \infty}^{\infty} e^{-2 \pi i a x } e^{- \pi x^2}dx$の値を求めよ.
+ 
+\item   $^{*}$ $\frac{e^{iz}}{z}$を考えることにより, $\int_{0}^{\infty}\frac{\sin x}{x} dx$の値を求めよ.
+        
+%\item  $\int_{0}^{\infty}\frac{\cos x}{x^2 + 1} dx$の値を求めよ.
+ \newpage 
+  \vspace{12pt}
+\hspace{-36pt}\underline{計算問題(積分経路が特殊なもの)}
+
+   \item  $\int_{0}^{\infty}\frac{1}{x^3+ 1} dx$の値を求めよ. (ヒント: 120度の扇形を考える.)
+   
+\item $\int_{0}^{\infty}\cos x^2 dx$の値を求めよ. (ヒント: 45度の扇形を考える.)
+
+\item $^{*}$  $\log(1-e^{2iz})$と$\{ z \in \C | 0 \le {\rm Re}(z) \le \pi, {\rm Im}(z) \ge 0\}$を考えることにより, $\int_{0}^{\pi}\log (\sin x) dx$の値を求めよ.
+% \item  (2017年度 阪大院試問題) 次の問いに答えよ.
+%  \begin{enumerate}
+%\setlength{\parskip}{0cm} 
+%  \setlength{\itemsep}{0cm} 
+%  \item $r>0$とし$\C$上の積分路を$C_{r} : z = r e^{i \theta} (0 \le \theta \le \pi)$とおく. 
+%  $I(r) := \int_{C_r} \frac{e^{iz}}{z} dz$とおくとき, $\lim_{r \rightarrow 0} I(r)$と$\lim_{r \rightarrow \infty} I(r)$の値をそれぞれ求めよ. 
+%\item 広義積分  $\int_{0}^{\infty}\frac{\sin x}{x} dx$は収束することを示し, その値を求めよ.
+%  \end{enumerate}
+ 
+ \end{enumerate}
+
+
+ \newpage
+
+
+\begin{center}
+{\Large 3 ワイエルシュトラスの二重級数定理・ベキ級数}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D= \{ z \in \C | |z|<1\}$とする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{ワイエルシュトラスの二重級数定理に関する問題}
+
+\begin{enumerate}[label=\textbf{問}3.\arabic*]
+
+\item 滑らかな曲線$C$上の連続関数列$f_n$が$f$に一様収束すれば,
+$\lim_{n\rightarrow \infty} \int_{C}f_n(z) dz = \int_{C} f(z) dz$であることを示せ.\footnote{1年次に習った定理を用いて良い. ただしどのように使ったか明記すること. また曲線$C$の解釈は解答者に委ねる. }
+\item 
+$\D$上の正則関数列$\{ f_{n}\}_{n=1}^{\infty}$と正則関数$f$であって, $\D$の
+任意のコンパクト集合上で$f_n$は$f$に一様収束するが, $\D$上では$f_n$は$f$に一様収束しない例を一つ構成せよ. 
+
+
+\item $^{*}$次を満たす例を構成せよ. \footnote{そこまで厳密に構成しなくても良い.}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $\{ f_{n}\}_{n=1}^{\infty}$は$(0,1)$上の$C^{\infty}$級関数列で$f$は$(0,1)$上の$C^{\infty}$級関数.
+\item $(0,1)$の任意のコンパクト集合上で$\{ f_{n}\}_{n=1}^{\infty}$が$f$に一様収束する.
+\item $\{ \drv{f_{n}}{x}\}_{n=1}^{\infty}$は$(0,1)$のあるコンパクト集合上で$\drv{f}{x}$に一様収束しない.
+\end{enumerate}
+
+ \vspace{12pt}
+\hspace{-36pt}\underline{ベキ級数に関する問題}
+
+\item $^{\bullet}$次の問いに答えよ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+%\item 原点を含むある開集合上の正則関数は原点の周りでベキ級数展開できることを示せ.
+\item 正則関数は$C^{\infty}$級関数であることを示せ.
+\item $\R$上の$C^{\infty}$級関数$f$で原点の周りでベキ級数展開できないものを一つ構成せよ. 
+\end{enumerate}
+
+\item $^{\bullet}$$f(z) $を半径$R>0$の円板$D_{R} = \{ z \in \C | |z|<R\}$上の正則関数とする. 任意の$0 < r < R$について, 収束半径$r$以上のベキ級数$\sum_{n=0}^{\infty} a_n z^n$で$D_{r}$上で$f(z) = \sum_{n=0}^{\infty} a_n z^n$となるものが存在することを示せ. 
+
+  \item $\C$上の正則関数$f(z)$とする. ある正の実数$A,B$と自然数$k$があって, 任意の$z \in \C$について
+  $
+  |f(z)| \le A|z|^k +B
+  $
+  となるならば, $f(z)$は高々$k$次の多項式であることを示せ.
+  
+
+
+\item $f(z) = \sum_{n=0}^{\infty} a_n z^n$を半径$R>0$の円板$D_{R} = \{ z \in \C | |z|<R\}$上の正則関数とし, $0< r < R$とする. 次を示せ.
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $|a_n| \le \frac{1}{2 \pi r^n} \int_{0}^{2 \pi} |f(r e^{i \theta})| d \theta$
+  \item  $\sum_{n=0}^{\infty} |a_n|^2 r^{2n} =\frac{1}{2 \pi} \int_{0}^{2 \pi} |f(r e^{i \theta})|^2 d \theta$
+  \end{enumerate}
+  
+\newpage 
+  
+   \vspace{12pt}
+\hspace{-36pt}\underline{一致の定理に関する問題} 
+  
+    \item $f$を$\Omega$上の正則関数とする.  次の問いにこたえよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+   \item (零点の孤立) $f$を定数関数ではないとし, $a \in \Omega$を$f$の零点とする. 
+   このとき$a$を含む半径$r > 0$の円板$D$で, $\bar{D} \subset \Omega$かつ$f$は$D \setminus \{ a\}$上で零点を持たないようなものが存在することを示せ.\footnote{正則関数の零点は孤立しているということである. これは一変数特有の現象である. }
+     \item (一致の定理) ある空でない開集合$U \subset \Omega$があって$U$上で$f \equiv 0$ならば, $\Omega$上で$f \equiv0$であることを示せ. 
+     %$a_{n}$を$a \in \Omega$に収束する$\Omega$の複素数列とする. (ただし任意の$n \in \N$について$a_n \neq a$とする.) 任意の$n \in \N$について$f(a_n)=0$ならば$f \equiv 0$であることを示せ.
+     
+   \end{enumerate}
+   \item $^{\bullet}$ $\Omega$上の正則関数$f,g$が$fg \equiv 0$を満たすならば$f \equiv 0$または$g \equiv 0$であることを示せ. また$f,g$が単に$C^{\infty}$級関数の場合は同様の主張は成り立つか?
+   
+ \end{enumerate}
+ 
+
+\newpage
+
+
+\begin{center}
+{\Large 4 有理型関数・バーゼル問題}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/04/11
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{ローラン展開・極に関する問題}
+
+\begin{enumerate}[label=\textbf{問}4.\arabic*]
+
+\item $^{\bullet}$次の問いに答えよ. %\footnote{問題の都合上$f$や$a$が何かは言えないが,.}
+   \begin{enumerate}
+ \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 「$a$が$f$の除去可能特異点である」, 「$a$が$f$の極である」, 「$a$が$f$の真性特異点である」ことの定義をそれぞれ述べよ.
+  \item 「$f$が$\Omega$の有理型関数である」, 「$f$が$\Omega$の有理関数である」ことの定義をそれぞれ述べよ. また二つの定義の違いは何か?　%\footnote{有理型関数だが有理関数でないものの例をあげても良い. }
+    \end{enumerate}
+    
+ 
+\item $^{\bullet}$ 「$\frac{e^z}{z^3}$の$z=0$での留数」と「$\frac{z^4 + 3}{z^4 -1}$の$z=i$での留数」をそれぞれ求めよ.
+%\item $^{\bullet}$ $\frac{z^4 + 3}{z^4 -1}$の$z=i$での留数を求めよ.
+
+
+\item $^{\bullet}$ (Chat GPTによる問題) 以下の関数の留数や特異点を求めよ.\footnote{Chat GPTに「複素関数論続論演義の問題の案を教えて」と言ったらこの問題が返ってきた. その他いろいろと試してみるとChat GPTは私の演習問題を5-7割くらい解けるようである. }
+
+(a) $f(z) = \frac{1}{(z-1)^2(z+2)}$,  
+(b) $f(z) = \frac{\sin z}{z^3(z-\pi)^2}$
+
+\item  $^{\bullet}$ $\frac{1}{(z-1)(z-2)}$の円環領域$\{ z\in \C | 1 < |z| < 2\}$におけるローラン展開を求めよ.
+
+\item $e^{z + \frac{1}{z}}$の$z=0$でのローラン展開を求めよ.
+
+
+\item  $^{*}$ $\frac{1}{(\sin z)^2}$の$z=0$におけるローラン展開を$z^4$の係数まで求めよ.
+
+ \item $f(z)$を極が有限個である$\C$上の有理型関数で, $\lim_{|z| \rightarrow \infty} f(z)= \alpha $となる$\alpha \in \C$が存在すると仮定する. このとき$f(z)$は有理関数であることを示せ.
+   また「$\lim_{|z| \rightarrow \infty} f(z)= \alpha $」という仮定を外したとき, この主張は成り立つか?
+       
+  \item \label{henkaku} (偏角の原理) $f$を円板$D$上の正則関数とし, $\partial D$上に$f$の零点はないものとする. 
+  $f$の$D$での零点の個数を$N$とする (ただし, $m$位の零点は$m$この零点と重複して考える.)
+  このとき
+  $$
+  \frac{1}{2 \pi i} \int_{\partial D} \frac{f' (z)}{f(z)} dz = N
+  $$
+  が成り立つことを示せ. また$f$が有理型関数の場合はどうなるか?
+  \item \ref{henkaku}を用いて代数学の基本定理を示せ.
+  
+\vspace{12pt}
+\hspace{-36pt}\underline{正則関数の拡張に関する問題}
+
+
+
+ \item \label{yukai} $^{\bullet}$  $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, $f$を$\D^{*}$上の正則関数とする. 
+ $f$が$\D^{*}$上で有界ならば, $f$は$\D$上の正則関数に拡張できることを示せ. 
+ 
+  \item $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, 
+  $f$を$\D^{*}$上の正則関数とする. % $z \in \D^{*}$によらない
+ 定数$M>0$があって$\D^{*}$上で$|f(z)| \le M \log |z|$であるとき, $f$は$\D$上の正則関数に拡張できることを示せ. \footnote{もっと強く$f$が$L^2$関数なら拡張できる.(演習でこれを示しても良い).}
+ 
+ 
+ \item $\D^{*}=\{z \in \C | 0 < |z| <1\}$とし, $f$を$\D^{*}$上の複素数値$C^{\infty}$関数とする. 
+ $f$が$\D^{*}$上で有界ならば, $f$は$\D$上の$C^{\infty}$関数に拡張するか?
+ %$(-1,1) \setminus \{ 0\}$上の有界な$C^{\infty}$級関数で$(-1,1)$に$C^{\infty}$級拡張できないものを構成せよ. 
+ 
+  \item $\C \setminus \{ 0\}$上の正則関数$f(z)=\frac{1 - \cos z}{z^2}$は$f(0)$をうまく定めれば$\C$上の正則関数に拡張できることを示せ. 
+  
+ \item $f(z)$を$\C$上の正則関数とする. 任意の$z \in \C$について$|f(z)| \le |\sin z|$が成り立つならば, ある$a \in \C$が存在して$f(z) = a \sin z$となることを示せ. 
+ 
+
+
+      
+ \vspace{12pt}
+\hspace{-36pt}\underline{第5回授業に関する問題}     
+  \item (授業の内容)$\sum_{n= - \infty}^{\infty} \frac{1}{(z - n \pi)^2}$は領域$\{ z \in \C | |{\rm Im}(z)| >1, 0 < {\rm Re}(z) < 1\}$上において一様収束することを示せ.
+
+ \item  (授業の内容)次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $\sin z =0$となる$z \in \C$を全て求めよ. 
+\item $\sin z =2$となる$z \in \C$を全て求めよ. 
+   \end{enumerate}
+   
+ \item  (授業の内容)$|{ \rm Im}(z)| \rightarrow \infty$ならば$|\sin z| \rightarrow \infty$となることを示せ.
+ 
+ 
+\item $\sum_{n=1}^{\infty}\frac{1}{n^4}$と$\sum_{n=1}^{\infty}\frac{1}{n^6}$をそれぞれ求めよ. 
+
+   
+ 
+\vspace{12pt}
+\hspace{-36pt}\underline{院試の問題}  
+  \item $^{*}$ $a>0$とし
+  $$
+  f(z) = \frac{ e^{iz}}{z(z^2 + a^2)}
+  $$
+  と定める. 次の問いにこたえよ.
+   \begin{enumerate}
+ \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $z=0$における$f(z)$のローラン展開の主要部を求めよ.
+  \item $r>0$とし$\C$上の積分路を$C_{r} : z = r e^{i \theta} (0 \le \theta \le \pi)$とおく. 
+  $I(r) := \int_{C_r} f(z )dz$とおくとき, $\lim_{r \rightarrow 0} I(r)$と$\lim_{r \rightarrow \infty} I(r)$の値をそれぞれ求めよ.
+  \item $0 < r < a < R$なる実数に対し
+  $$
+  D_{r,R}= \{ z \in \C | r < |z| < R, {\rm Im}(z) >0 \}
+  $$
+  とおく. $\int_{\partial D_{r,R}} f(z) dz$の値を求めよ.
+  \item 広義積分$\int_{0}^{\infty}\frac{ \sin x}{x(x^2 + a^2)} dx$は収束することを示し, その値を求めよ.
+      \end{enumerate}
+     
+\item $^{*}$大阪大学の数学科の院試の問題で複素解析に関係あるものを解け. ただし解答前に教官(岩井)に問題を見せること. 
+
+    \end{enumerate}      
+ \newpage
+ 
+ 
+\begin{center}
+{\Large 5 楕円関数}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{はじめに}
+
+\hspace{-12pt}複素解析続論に関して, 楕円関数以降の内容はかなり難易度が高いと思います.\footnote{正直いうと私も復習するまでまあまあ忘れていました. 主張だけは覚えていたもの(リーマンの写像定理)や主張すら忘れていたものなど多くあります. 学部時代は私は複素解析続論の内容にあまり興味がなかったので, なんとなくの理解しかないです...(授業中も適当にノート取って, アティマクの演習問題解いてました.) }
+個人的には第4回演習の内容をきっちり理解すること, そしてその後に第5回以降の内容を(努力できる範囲で)理解することをお勧めします. (かなり難しい問題も入っているので, 全部解こうとは思わないでください. 教科書や参考書なども参考にしながら解いてください.)
+
+
+\vspace{12pt}
+\hspace{-24pt}\underline{ペー関数に関する問題}
+
+\hspace{-12pt}以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+\hspace{-12pt}%任意の$z \in \Omega$について$-z \in \Omega$となる領域$\Omega$上の関数$f(z)$について, 
+$f(-z)=f(z)$となる関数を\underline{偶関数}といい, $f(-z)=-f(z)$となる関数を\underline{奇関数}という.
+
+\hspace{-12pt}$\omega_1, \omega_2 \in \C$を$\frac{\omega_2}{\omega_1} \not \in \R$となる複素数とする. $L := \{ m\omega_1 + n \omega_2 | m,n\in \Z\}$とし, ワイエルシュトラスのペー関数$\wp(z)$を以下の通りとする. 
+$$\wp(z) := \frac{1}{z^2} + \sum_{w \in L \setminus \{ 0\}}\left(\frac{1}{(z-w)^2} - \frac{1}{w^2}\right)
+= \frac{1}{z^2} + \sum_{(m,n) \in  \Z^2 \setminus \{ (0,0)\}}\left(\frac{1}{(z-m\omega_1 - n \omega_2)^2} - \frac{1}{(m\omega_1 + n \omega_2)^2}\right)
+$$
+
+
+
+\begin{enumerate}[label=\textbf{問}5.\arabic*]
+
+\item $^{\bullet}$  ワイエルシュトラスのペー関数の定義を書け. ただし発表時にノートなどを見てはいけない. またこの問題は一回以下の発表者のみ回答できる. (この問題は救済問題です. 配点は非常に低いです. )
+
+ \item$^{\bullet}$ $\D$上の正則関数$f(z)$が奇関数であるとき
+ $z=0$でのテーラー展開を
+ $$
+ f(z) = a_0 + a_1 z + a_2 z^2 + \cdots
+ $$
+ とすると, $a_0=a_2=a_4= \cdots =0$であることを示せ.
+ 
+ \item $^{\bullet}$  任意の$z \in \C$について$f(z)=f(z+1)=f(z+i)$となるような$\C$上の正則関数$f(z)$を全て求めよ. 
+ \item $^{\bullet}$ ワイエルシュトラスのペー関数$\wp(z)$が$z=0$で2位の極を持つことと, 偶関数であることを示せ.  \footnote{授業の内容を自分なりに要約して答えること. 授業の板書通りを丸写しした場合は不正解とする. }
+ 
+ \item (授業の内容) $r>0$を実数とする. $|z| < r$, $|w| > 2r$となる複素数$z, w$について次を示せ.
+ $$\left|\frac{1}{(z - w)^2} - \frac{1}{w^2} \right| < \frac{10 r }{|w|^3}$$
+
+ 
+ \item (授業の内容) $m,n$を整数とし
+ $$
+ K_{m,n}:= \left\{ (x,y) \in \R^2 | m - \frac{1}{2} \le x \le m +\frac{1}{2} , n- \frac{1}{2} \le y\le n +\frac{1}{2} \right\}
+$$
+とおく. 次を示せ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $(m,n) \neq (0,0)$ならば
+  $$ \frac{1}{(\sqrt{m^2 + n^2})^3} \le \iint_{K_{m,n}} \frac{8}{(\sqrt{x^2 + y^2})^3} dxdy$$
+  \item $$\sum_{(m,n) \in  \Z^2 \setminus \{ (0,0) \}}\frac{1}{(\sqrt{m^2 + n^2})^3} < \infty$$
+    \end{enumerate}  
+\item 次の式を示せ.
+$$\sum_{(m,n) \in  \Z^2 \setminus \{ (0,0) \}}\frac{1}{m^2 + n^2} = +\infty$$
+
+ \item 
+$\wp(z)$の原点におけるローラン展開を$\wp(z) = \frac{1}{z^2} + a_2 z^2 + a_4 z^4 + \cdots$とするとき, 次を示せ.
+ $$
+ a_2 = 3 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}, \quad
+ a_4 = 5 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}
+ $$
+ また
+ $g_2 = 60\sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}$,
+ $g_3=140 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}$とおくとき, 授業でやったことを用いて次の式を示せ.
+ $$
+ (\wp'(z))^2 = 4 \wp(z)^3 - g_2 \wp (z) - g_3
+ $$
+ 
+ \item $\wp''(z) - 6 \wp(z)^2$は定数関数であることを示せ. またその定数は何か?
+ \item $\alpha \in \C$について, 周期平行四辺形にある$z$で$\wp(z)=\alpha$を満たすものの個数は(零点の重複度をこめて)2であることを示せ. (ヒント: $\frac{\wp'(z)}{\wp(z) - \alpha}$を考える.)
+% また$z,z'\in \C$が$\wp(z)=\wp(z')$であるならば, $z \pm z' \in L$であることを示せ.
+ 
+ \item $^{*}$次の問いに答えよ
+ \begin{enumerate}
+ \item 周期平行四辺形にある$z$について, $\wp'(z)$の極は$L$の点であり, $\wp'(z)$の零点は$ \frac{\omega_1}{2},  \frac{\omega_2}{2},  \frac{\omega_1+\omega_2}{2}$であることを示せ.
+ \item $\wp(z)=\wp(z')$であるならば, $z \pm z' \in L$であることを示せ.
+ \item $e_1 = \wp(\frac{\omega_1}{2}), e_2 = \wp(\frac{\omega_2}{2}), e_3 = \wp( \frac{\omega_1+\omega_2}{2})$とすると, これらは互いに異なり, 次を満たすことを示せ.
+ $$
+  (\wp'(z))^2 = 4 (\wp(z)-e_1)(\wp(z)-e_2)(\wp(z)-e_3)
+ $$
+ \end{enumerate}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{楕円関数の問題}
+
+  \item $\omega$を楕円関数$f(z)$の一つの周期とする.\footnote{つまり任意の$z \in \C$について$f(z + \omega) = f(z)$となるもの}次を示せ. 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $f(z)$が奇関数ならば$f(\frac{\omega}{2})=0$.
+ \item $f(z)$が偶関数で$f(\frac{\omega}{2})=0$ならば, $z = \frac{\omega}{2}$での$f$の零点の位数は2以上である. 
+      \end{enumerate}  
+   
+   
+   \newpage
+   
+   
+\item$^{*}$  %\ref{pfunction}のように$\omega_1, \omega_2, \wp$をとる. 
+$f(z)$を$\omega_1, \omega_2$を周期とする楕円関数とする. 次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 周期平行四辺形を$H$とする. $\alpha \in \C$を$\alpha \not \in f(\partial H)$かつ$\alpha \not \in f ((f')^{-1}(0))$となるものとする. $f(z)$が偶関数ならば, $f(z)=\alpha$は$H$内に相異なる偶数個の解を持つことを示せ. 
+ \item $f(z)$が偶関数ならば, ある有理式$R(x)$があって, $f(z) = R(\wp(z))$となることを示せ. (ヒント: (a)のような$\alpha, \beta$をとり, $\frac{f(z) - \beta}{f(z) - \alpha}$を$\wp$を用いて表せ.)
+ \item $f(z)$は偶関数と奇関数の和で常に表せることを示せ.
+ \item ある有理式$R_1, R_2$があって, $f(z) = R_1(\wp(z)) + \wp' (z)R_2(\wp(z))$とかけることを示せ.
+  \end{enumerate}  
+ ここで複素係数多項式$P(x), Q(x)$を用いて表せる$R(x) = \frac{P(x)}{Q(x)}$を\underline{有理式}という.
+      
+\item \label{divisor}$^{*}$ %\ref{pfunction}のように$\omega_1, \omega_2, \wp, L$をとる. 
+$f(z)$を$\omega_1, \omega_2$を周期とする楕円関数とし, $H$を周期平行四辺形とする. ただし$H$の境界上に$f$の極や零点はないものとする. 次の問いに答えよ. 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\frac{1}{2 \pi i} \int_{\partial H} \frac{z f'(z)}{f(z)} dz$は$L$の元であることをしめせ.\footnote{ただし第8回演習問題の内容を用いて良い}
+  \item $f$の$H$内の零点を$a_1, \ldots, a_s$とし$H$内の極を$b_1, \ldots, b_t$とする. 
+  $m_i$を$f$の$a_i$での零点の位数とし, $n_j$を$b_j$の極の位数とする. $\sum_{i=1}^{s}m_i - \sum_{j=1}^{t}n_j$の値を求めよ. 
+  \item $\sum_{i=1}^{s}m_ia_i - \sum_{j=1}^{t}n_jb_j $は$L$の元であることを示せ. %\footnote{この式は代数多様体の因子への応用がある. Harthorne Chapter2参照のこと.}
+
+ \end{enumerate}  
+  
+%\end{enumerate}        
+     
+     
+     
+  
+     
+\vspace{12pt}
+\hspace{-24pt}\underline{個人的に気になった問題}     
+     
+以下の問題は個人的に気になった話題である.
+ そもそもなぜワイエルシュトラスのペー関数$\wp(z)$を勉強するのだろうか?\footnote{この関数を考える意味がそもそもあるのかと思うかもしれない} 
+ 以下の問題群はワイエルシュトラスのペー関数$\wp(z)$を勉強する一つの理由を与えるものである.
+ %\footnote{すみません, 私も不勉強だったので, この演習問題を通して勉強することにしました. }
+ この問題群は余裕のある人がやってください. また未定義な用語がある(かもしれない)のでそこは各自調べてください. 
+ 
+ 以下$\mathbb{H} := \{ \tau \in \C | Im(\tau)>0\}$とする.
+%\begin{enumerate}[label=\textbf{問}5-Ex.\arabic*]
+\item $^{*}$$\omega_1, \omega_2 \in \C$を$\frac{\omega_2}{\omega_1} \not\in \R$かつ$\frac{\omega_2}{\omega_1} \in \mathbb{H}$となる複素数とする. (のちの$\omega'_1, \omega'_2$も同様である.)
+$$L :=\Z  \omega_1 + \Z \omega_2=\{ m\omega_1 + n \omega_2 | m,n\in \Z\}$$
+とする($\C$の格子と呼ばれる.)
+この問題は「複素1次元トーラス$\C/\Z  \omega_1 + \Z \omega_2$と$\C/\Z  \omega'_1 + \Z \omega'_2$がいつ双正則になるか?」について考える問題である. \footnote{$M$と$N$が双正則とは, 正則な全単射$f : M \to N$が存在すること(このとき正則な逆写像$g : N \to M$も存在する.) ただし厳密に定義するには複素多様体の概念を用いる必要がある.  }
+次の問いに答えよ.
+ \begin{enumerate}
+\item $\C$の集合として$\Z  \omega_1 + \Z \omega_2= \Z  \omega'_1 + \Z \omega'_2$となるための必要十分条件は, ある整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$が存在して$\det A =1$かつ
+$
+\begin{pmatrix}
+\omega'_1\\
+\omega'_2 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}
+\begin{pmatrix}
+\omega_1\\
+\omega_2 \\
+\end{pmatrix}
+\text{である.}
+$
+\item $\tau := \frac{\omega_2}{\omega_1}$とする. $F: \C \rightarrow \C$を$F(z) = \frac{z}{\omega_{1}}$とするとき, ある同相写像
+$\tilde{F} : \C/\Z  \omega_1 + \Z \omega_2 \rightarrow \C/\Z  + \Z \tau $が存在して次の可換図式を満たすことを示せ.
+\begin{equation*}
+\xymatrix@C=40pt@R=20pt{
+\C \ar@{->}[r]^{F} \ar@{->}[d]^{\pi}&\C \ar@{->}[d]^{\pi_1}\\ 
+\C/\Z  \omega_1 + \Z \omega_2 \ar@{->}[r]^{\tilde{F}} &\C/\Z  + \Z \tau  \\ 
+ }
+ \end{equation*}
+ ただし, $\pi,\pi_1$は商写像とする. (実はもっと強く双正則であることが言える.) よって以後$\omega_1, \omega_2$ではなく$\tau \in \mathbb{H}$を考えれば良い.
+ %\footnote{実は$\tilde{F}$は双正則写像であることがわかっている. ただしそれを示すには"複素多様体"を学ばないといけないので割愛する.}
+
+\item $\tau_1, \tau_2 \in \mathbb{H}$とする. $G: \C/\Z  + \Z \tau _1 \to  \C/\Z  + \Z \tau _2 $が双正則ならば,
+\begin{equation*}
+\xymatrix@C=40pt@R=20pt{
+\C \ar@{->}[r]^{\hat{G}} \ar@{->}[d]^{\pi_1}&\C \ar@{->}[d]^{\pi_2}\\ 
+\C/\Z  + \Z \tau _1 \ar@{->}[r]^{G} &\C/\Z  + \Z \tau _2 \\ 
+ }
+ \end{equation*}
+ となるような全単射正則写像$\hat{G}: \C \rightarrow \C$が存在することがわかっている. 
+ %このとき$\alpha \in \Z  + \Z \tau _2 $があって$\hat{G} = \alpha z$となることを示せ.
+ このことを用いて, $\C/\Z  + \Z \tau _1$と$\C/\Z  + \Z \tau _2 $が双正則になるならば,
+ ある整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$が存在して$\det A =1$かつ
+$\tau_1 = \frac{a \tau_2 +b}{c \tau_2 +d}$となることを示せ. 
+  \footnote{ただし第6回演習問題の内容を証明せずに用いても良い}
+  実は(b)と同じ議論で逆も言える.
+  \item $$
+M=\{\tau \in \mathbb{H} | -\frac{1}{2} \le Re(\tau) < \frac{1}{2}, |\tau| \ge 1, \text{$-\frac{1}{2} < Re(\tau)<0$ならば$\tau>1$}
+\}
+$$
+とする. $M$を図示せよ. ($M$は複素１次元トーラスのすみかとも思える.) \footnote{$M$の点は複素１次元トーラス全体を双正則で割った集合と思える．$M$は複素1次元トーラスのなるモジュライ空間とも呼ばれる. }
+ \item 任意の$\tau_1, \tau_2 \in \mathbb{H}$について, $\C/\Z  + \Z \tau _1$と$\C/\Z  + \Z \tau _2 $は同相であることを示せ. つまり同相であっても双正則でないことが起こる.\footnote{もっと強く実は$C^{\infty}$級同型はいえる. つまり$C^{\infty}$級では同じでも複素構造は違うものがあると言うことである. これを詳しく調べたのが小平邦彦とD.C.スペンサーであり, のちに小平・スペンサーの変形理論につながる. ちなみに小平邦彦は日本人初のフィールズ賞受賞者である. }
+ \end{enumerate}
+
+
+ \item $^{*}$ \label{embedding} $\tau \in \mathbb{H}$について
+$$ g_2(\tau) = 60\sum_{(m,n) \in \Z^2 \setminus \{ (0,0)\} }\frac{1}{(m+ n \tau)^4}
+\quad
+ g_3(\tau)=140 \sum_{(m,n) \in \Z^2 \setminus \{ (0,0)\} }\frac{1}{(m+ n \tau)^6} 
+ $$とし, $e_1 = \wp(\frac{1}{2}), e_2 = \wp(\frac{\tau}{2}), e_3 = \wp( \frac{1+\tau}{2})$とする.
+ %$\omega_1, \omega_2 \in \C$を$\frac{\omega_1}{\omega_2} \in \R$かつ$Im(\frac{\omega_1}{\omega_2})>0$となる複素数,  $g_2,g_4,e_1,e_2,e_3$をこの演習問題に出てきた通りとする. 
+ %$g_2 = 60\sum_{w \in L \setminus \{ 0\}}\frac{1}{w^4}$, $g_4=140 \sum_{w \in L \setminus \{ 0\}}\frac{1}{w^6}$とおく.
+ この問題は「複素1次元トーラスは代数多様体である」ことを見る問題である. (一部分講義で触れた内容を含む.)
+ $$M = \{ (x:y:z) \in \C \mathbb{P}^2 | y^2z = 4x^3 - g_2 x z^2- g_3 z^3 \}$$とおくとき, 次の問いに答えよ. 
+ \begin{enumerate}
+%\item $g_{2}^{3} - 27 g_{3}^{2} = 16\prod_{1 \le i< j \le 3}(e_i - e_j)^2 \neq 0$をしめせ. (これより$M$が複素多様体になる. )
+\item  同相写像$f: \C/\Z  \omega_1 + \Z \omega_2 \rightarrow  M$を一つ構成せよ.
+\footnote{自然に構成していればこれは双正則になる. つまり$\C/\Z+ \Z \tau $から$\C \mathbb{P}^2$への正則埋め込みを具体的に記述したことになる. 専門的な用語で言うと「$3P$がvery ampleである」}
+\footnote{難しければ$f: (\C/\Z  + \Z \tau) \setminus \{ 0\} \rightarrow  M \setminus \{ (0 : 1: 0)\}$なる同相写像でも良い.}
+\item $\wp : \C/(\Z  \omega_1 + \Z \omega_2) \setminus  \{ 0\}\rightarrow \C $を考える. ある$\C$の3点$\alpha_1,\alpha_2,\alpha_3$を除いて, $\wp^{-1}(w)$の個数は2であることを示せ. またある3点$\alpha_1,\alpha_2,\alpha_3$を求めよ.\footnote{本当は$\wp : \C/(\Z  \omega_1 + \Z \omega_2) \to \C\mathbb{P}^1$にすれば$\C\mathbb{P}^1$の$\infty$に対応する点も"例外"になり, 全4点が変な点となっていることがわかる. なぜ4点なのかは, リーマン・フルビッツの定理から出る. なおこの写像は$M \to \C\mathbb{P}^1$ $(x:y:z) \mapsto (x:z)$に"ほぼ"対応する.(ただし$(0:1:0)$だけ$(1:0)$に送るようにする.) この場合にも変な点4点を全て決定してみよ.} 
+\item $\lambda = \frac{e_3 - e_2}{e_1 - e_2}$とおく. \ref{j_invariant}の$j$不変量は, ある実数$c \in \R$があって
+$$
+j(\tau ) = c \frac{(1 - \lambda + \lambda^2)^3}{\lambda^2 (1 - \lambda)^2}
+$$
+となることを示せ. またそのような定数$c \in \R$を求めよ. \footnote{$y^2 z = 4(x - e_1 z)(x - e_2 z) (x - e_3 z)$なので, $j$不変量は標数$p$の楕円曲線でも定義ができる. 詳しくはHartshorne Chapter 4参照のこと. }
+ただし$g_{2}^{3} - 27 g_{3}^{2} = 16\prod_{1 \le i< j \le 3}(e_i - e_j)^2 \neq 0$は証明なしに用いて良い.
+ \end{enumerate}
+ 
+ 
+\item $^{*}$ \label{j_invariant} 引き続き\ref{embedding}の記号を用いる. 
+$j$不変量を
+$$
+j(\tau):= 1728\frac{g_{2}^{3}}{g_{2}^{3} - 27 g_{3}^{2}}
+$$
+と定義する. この問題は「$j$不変量と複素1次元トーラスの関係を見る」問題である.\footnote{$j$関数は$q=exp(2 \pi i \tau)$として$j(z)$を展開すると
+$$
+j(\tau) = \frac{1}{q} + 744+ 196884 q + \cdots 
+$$
+となる．一方モンスター群と呼ばれる"単純群(自明でない正規部分群を持たない群)で例外かつ一番大きい位数を持つもの(位数$2^{46} \cdot 3^{20}\cdot 5^9 \cdot 7^6\cdot11^2\cdot13^3\cdot17\cdot19\cdot23\cdot29\cdot31\cdot41\cdot47\cdot59\cdot71$)"
+の既約表現の次元は$1,196883,\cdots$である． なんと$196884 = 196883 +1$が成り立つのである. これは偶然だと思われるかもしれないが, 実は高い次数でも似たようなことが成り立つのである.(ムーンシャイン予想と呼ばれる) 1992年にR.ボーチャーズはムーンシャイン予想を解決し, その業績でフィールズ賞を取った.
+}
+次の問いに答えよ
+\begin{enumerate}
+\item $A$を整数係数$2 \times 2$行列$A=\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}$で$\det A =1$となるものとするとき, 以下を示せ.
+$$
+g_2\left(\frac{a \tau + b}{c \tau + d}\right) = (c \tau + d)^4 g_2(\tau), 
+g_3\left(\frac{a \tau + b}{c \tau + d} \right) = (c \tau + d)^6 g_3(\tau), 
+$$
+また$j(\frac{a \tau + b}{c \tau + d}) = j(\tau)$をしめせ．
+\item $\tau_1, \tau_2 \in \mathbb{H}$について, $\C/\Z + \Z \tau_1$と$\C/\Z + \Z \tau_2$が双正則ならば, $j(\tau_1) = j(\tau_2)$であることを示せ.
+\item $j(\tau_1) = j(\tau_2)$であるならば, ある$t \in \C$があって, $ g_2(\tau_2) = t^4 g_2(\tau_1), g_3(\tau_2) = t^6 g_3(\tau_1) $
+となることを示せ.
+\item \ref{embedding}(a)を用いて, $j(\tau_1) = j(\tau_2)$であるならば, $\C/\Z + \Z \tau_1$と$\C/\Z + \Z \tau_2$が双正則であることを示せ. 
+%\item $$M=\{\tau \in \mathbb{H} | -\frac{1}{2} \le Re(\tau) < \frac{1}{2}, |\tau| \ge 1, \text{$-\frac{1}{2} < Re(\tau)<0$ならば$\tau$>1}\}$$とする. $M$を図示せよ. \item 任意の$\tau \in \mathbb{H}$について, $\tau' \in M$が一意に存在して, $j(\tau)=j(\tau')$となることを示せ. \footnote{これより$M$の点は複素１次元トーラス全体を正則同型で割った集合と思える．$M$は複素1次元トーラスのなるモジュライ空間とも呼ばれる. }
+%\item $M$は1次元トーラスのなす空間
+%\item $\lambda = \frac{e_3 - e_2}{e_1 - e_2}$とおくとき,$j (\tau) = 256\frac{(1 - \lambda + \lambda^2)^3}{\lambda^2 (1- \lambda)^2}$となることを示せ.
+\end{enumerate}
+
+
+ \item $^{*}$
+ この問題は「フェルマーの最終定理などの教科書で一度は聞いたことがある, 3次曲線上の点同士の謎の足し算」に関する問題である. 
+ %\footnote{この問題は前年度の演習問題にもあった. 演習問題にしては難易度高いと思う.}
+ $a, b, a+b, a-b$がどれも$L$に入らない相異なる複素数$a, b$を考え,  
+ $$
+ f_{a,b}(z) := 
+ \begin{vmatrix}
+ \wp(z) & \wp'(z)& 1\\
+ \wp(a) & \wp'(a)& 1\\
+  \wp(b) & \wp'(b)& 1\\
+ \end{vmatrix}
+ $$
+とする. 次の問いに答えよ.
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f_{a,b}(z)$の極と位数を求めよ.
+  \item $f_{a,b}(-a-b)=0$を示せ. (ヒント: \ref{divisor})
+ \item $\C^2$上の3点$(\wp(a), \wp'(a))$, $(\wp(b), \wp'(b))$, $(\wp(-a-b), \wp'(-a-b))$は一直線上にあることを示せ. ここで3点が一直線上にあるとは, ある複素数$C,D$があって$y=Cx + D$を3点とも満たすこととする. \footnote{$C,D$は複素数で良い. (複素)一直線と呼んだ方が正確?}
+ \item 3次曲線$y^2 = 4 x^3 + Ax +B$と直線$y=Cx + D$が相異なる3点$(x_1, y_1), (x_2,  y_2), (x_3, y_3)$で交わるとする. このとき$x_3$を$x_1, y_1, x_2, y_2$を用いて表せ.
+ \item 次の式(加法定理)を示せ.
+ $$
+ \wp(a+b) = - \wp(a) - \wp(b) + \frac{1}{4} \left( \frac{\wp'(a) - \wp'(b)}{\wp(a) - \wp(b)}\right)^2
+ $$
+  \end{enumerate}         
+    
+  \end{enumerate}     
+
+\newpage
+
+
+\begin{center}
+{\Large 6 最大値原理・開写像定理}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+%\vspace{12pt}\hspace{-24pt}\underline{ローラン展開・極に関する問題}
+
+\begin{enumerate}[label=\textbf{問}6.\arabic*]
+
+\item $^{\bullet}$ $f$を$|f| \le 1$となる$\D$上の正則関数とする. $f(\frac{1}{2})=1$ならば$f$は定数関数であることを示せ.
+
+\item $^{\bullet}$ $f$を$\D$上の正則関数かつ$\bar{\D}$上で連続な関数とし, $f$は$\D$内で零点を持たないものとする. 
+$|z|=1$上で$|f(z)|$が定数関数ならば, $f$は$\D$上で定数関数であることを示せ. (ヒント: $f, \frac{1}{f}$に最大値原理を用いよ. もしくは最大値原理と最小値原理を用いても良い. )
+%$f$を$\D$上の正則関数かつ$\bar{\D}$上で連続な関数とする.$|z|=1$である任意の$z$について$|f(z)|=0$ならば, $f$は定数関数であることをしめせ.
+
+\item $^{\bullet}$次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item  $p : \R^{2} \rightarrow \R$, $p(x,y)=x$は開写像であるが閉写像ではないことを示せ. 
+\item 開写像定理の主張を述べよ.
+\item $q : \R^{2} \rightarrow \R^2$, $q(x,y)=(x,xy)$は開写像ではないことを示せ.  (つまり「開写像定理」において正則性は必要である.)
+%定数でない$C^{\infty}$級関数で開写像ではないものの例をあげよ. (つまり「開写像定理」において正則性は必要である.)
+    \end{enumerate}  
+   
+
+\item $^{\bullet}$次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $C^{\infty}$級関数$f : \R \rightarrow \R$で単射であるが, ある$a \in \R$があって$f'(a)=0$となるものを一つ構成せよ.
+   \item 「逆関数の正則性」の主張を述べよ.
+\item $C^\infty$級関数$f : \R \rightarrow \R$で全単射であるが$f^{-1}$が$C^{\infty}$級でないものを一つ構成せよ. (つまり「逆関数の正則性」において正則性は必要である.)
+   \end{enumerate}  
+   
+   
+   \item $f$を$\Omega$上の定数でない正則関数とする. $a \in \Omega$があって$f' (a) \neq 0$であるならば, 
+   $a$を含む半径$r > 0$の円板$D$で$f|D : D \rightarrow \C$が単射になるものが存在することを示せ.
+    
+   \item $f$を$\Omega$上の単射な正則関数とし, $\bar{D} \subset \Omega$となる円板$D$とする. 
+   任意の$w \in f(D)$について次を示せ. 
+   $$
+   f^{-1}(w) = \frac{1}{2 \pi i} \int_{\partial D} \frac{zf'(z)}{f(z) - w} dz
+   $$
+   
+   \item $f$を$\D$上の正則関数とする. 次の問いに答えよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 
+  $
+  \lim_{r \to 1} 
+  \left(\sup_{ \theta \in [0 , 2 \pi]} |f(r e^{i \theta})| \right) =0
+  $
+ ならば$f \equiv 0$であることを示せ.
+\item     $
+  \lim_{r \to 1} 
+  \left(\sup_{ \theta \in [0 , \frac{\pi}{2}] } |f(r e^{i \theta})| \right) =0
+  $
+ ならば$f \equiv 0$であることを示せ. (ヒント: $f$をうまく組み合わせて(a)を満たす関数を作れ.)
+%$\theta \in [0, \frac{\pi}{2}]$に対して$|z| \rightarrow 1$とするとき$f$が0に一様収束するならば$f \equiv 0$であることを示せ.
+        \end{enumerate}  
+\item $w_1, \ldots, w_n$を$\C$上の単位円周上$S^1(=\partial \D)$の点とする. 
+次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $\prod_{i=1}^{n} |z - w_i| \ge 1$となる$z \in S^1$が存在することを示せ. 
+\item $\prod_{i=1}^{n} |z - w_i|=1$となる$z \in S^1$が存在することを示せ. 
+     \end{enumerate}  
+     
+     
+     \newpage
+   \item 次の問いに答えよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item (カゾラティ-ワイエルシュトラスの定理) $f$を$\D \setminus \{ 0\}$上の正則関数とする. $f$が$0$で真性特異点を持つならば, $f(\D \setminus \{ 0\})$は$\C$において稠密であることを示せ. \footnote{ヒント: もしそうでないなら, ある点$w \in \C $があって$g(z):=\frac{1}{f(z) - w}$が$\D \setminus \{ 0\}$上で有界となってしまう. これは$f$が$0$で真性特異点を持つことに反する(なぜか?)}
+\item  $f : \C \rightarrow \C$が単射な正則関数ならば, ある$a,b \in\C$があって$f(z) =az +b$であることを示せ. (ヒント: $f(1/z)$を考えよ.)
+       \end{enumerate}  
+\item $^{*}$$\C^{2} \setminus \{ 0\}$について, 同値関係$\sim$を「
+	$
+	z \sim w \Leftrightarrow \text{0でない複素数$\alpha$が存在して$z = \alpha w$}
+	$」
+	と定義する. $ \C\mathbb{P}^{1}:= (\C^{2} \setminus \{ 0\})/\sim$と書き複素射影空間と呼ぶ. 以下$z = (z_{1}, z_{2})$を$\C\mathbb{P}^{1}$の元とみなしたものを$(z_{1}:z_{2})$と書き複素同次座標と呼ぶ.
+$U_{1} = \{ (z_{1}:z_{2}) | z_{1}\neq 0\}, U_{2} = \{ (z_{1}:z_{2}) | z_{2}\neq 0\}$とおき, 
+$$
+\begin{array}{cccccccccc}
+\varphi_{1}: &\C& \rightarrow & U_{1}& &\varphi_{2}: &\C& \rightarrow & U_{2}& \\
+                      &z &\longmapsto &(1:z)&      &                      &w& \longmapsto &(w:1)&
+\end{array}
+$$	
+と定める. 次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\varphi_1, \varphi_2$は全単射であることをしめせ.  また逆写像を各々構成せよ.\footnote{もっと強く同相であるが, 面倒なのでそこまで示さなくても良い.}
+  \item $f : \C\mathbb{P}^{1} \rightarrow  \C$を連続写像とする. $f \circ \varphi_{1}$と$f \circ \varphi_{2}$が共に正則関数であるならば, $f$は定数関数であることを示せ. 
+     \end{enumerate}  
+     
+ \item $^{*}$(開写像定理を用いた代数学の基本定理の証明) $f(z) = z^n + a_1 z^{n-1}+ \cdots + a_{n-1}z + a_n$とし, $n \ge 1, a_n \neq 0$とする.  以下の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item $F : \C^2 \rightarrow \C^2$を$F(z,w) = (z^n + a_1 z^{n-1}w+ \cdots +a_{n-1}zw^{n-1} + a_n w^n, w^n )$とすると, $F$は連続写像$\tilde{F} : \C\mathbb{P}^{1} \to \C\mathbb{P}^{1} $を誘導することを示せ. 
+\item $f(\C)$は閉集合であることをしめせ.
+\item $f(\C)=\C$を示せ. これより$f(\alpha)=0$なる$\alpha \in \C$は存在する.
+      \end{enumerate}  
+
+   \item (ルーシェの定理)
+   $f,g$を$\Omega$上の正則関数, $D \subset \Omega$を円板, $C = \partial D$を円周とする.
+   $C$上で$|f(z)| > |g(z)|$ならば, $f$と$f+g$は$D$内で(重複度込みで)同じ個数の零点を持つことを示せ.
+   (ヒント: $t \in [0,1]$について$n_{t} : = \frac{1}{2 \pi i} \int_{C} \frac{f' + t g'}{f +t g} dz$とすると$n_t$が$[0,1]$上の整数値連続関数であることを示せ. 授業の開写像定理の証明も参考にせよ.)
+   
+ %  \item ルーシェの定理を用いて代数学の基本定理を示せ.
+   
+   \item $z^4 - 6z + 3=0$は$1 < |z| < 2$内に何個の解を持つか?
+ 
+   
+   \item $^{*}$ $|z| \le 3$の近傍で定義された正則関数$f(z)$で$|z|=3$上では零点を持たないものとする. 
+   $f$が次の3条件を満たすとき, $f(z)$の$|z |<3$における零点を全て求めよ.
+   $$
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{f'(z)}{f(z)} dz =2, \quad
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{zf'(z)}{f(z)} dz =2, \quad
+\frac{1}{2 \pi i} \int_{|z|=3} \frac{z^2f'(z)}{f(z)} dz =-4 
+   $$
+
+ 
+     \end{enumerate}  
+
+\newpage
+
+
+\begin{center}
+{\Large 7 シュワルツの補題}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+[用語] $f : M \to M$が正則な全単射のとき\underline{正則自己同型}という.
+$f : M\to N$が正則な全単射であるとき, \underline{双正則写像}という.
+
+
+\begin{enumerate}[label=\textbf{問}7.\arabic*]
+
+\item$^{\bullet}$ $f(0)=0, f(\frac{1}{2})=\frac{i}{2}$となる正則な全単射(正則自己同型)$f : \D \to \D$を全て求めよ.
+
+\item \label{isom} $^{\bullet}$ $|\alpha| <1$となる$\alpha \in \C$について$\Phi_{\alpha}(z) := \frac{\alpha - z}{1 - \bar{\alpha} z}$とおく. 次の問いにこたえよ. 
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $\Phi_{\alpha} \circ \Phi_{\alpha}(z) =z$.
+  \item $|z|=1$ならば$|\Phi_{\alpha}(z)|=1$
+    \item $|z|<1$ならば$|\Phi_{\alpha}(z)| < 1$
+\end{enumerate}
+
+\item \label{HtoD}$^{\bullet}$ $\Psi(z) = \frac{z-i}{z+i}$, $\mathbb{H}:=\{ z \in \C | {\rm Im}(z) >0\}$とおく. 次の問いに答えよ.
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $z \in \mathbb{H}$について$|\Psi(z)| \le 1$であることを示せ.
+  \item $\Psi(z)$は$\Psi :  \mathbb{H} \to \D$となる正則な全単射であることを示せ. (ヒント: 逆写像$\Phi : \D \to \mathbb{H}$は$\Phi(z)=\frac{iz + i}{-z +1}$である(なぜか?))
+  \end{enumerate}
+  
+\item $^{\bullet}$ $f : \D \to \D$を正則関数とするとき, 次を示せ. (ヒント: \ref{isom}とシュワルツの補題.)
+  \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$z \in \D$について
+  $
+  \left|\frac{f(z) - f(0)}{1 - \overline{f(0)} f(z)}\right| \le |z|
+  $
+  \item $|f' (0)| \le 1 - |f(0)|^2$
+    \end{enumerate}
+    
+    \item $f(z)$を$\D$上で正則な関数で${\rm Re}f(z) >0$かつ$f(0)=1$となるものとするとき, 次を示せ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$z \in \D$について $ \left|\frac{f(z) -1}{f(z)+1} \right| \le |z|$
+    \item $ \left|f'(0) \right| \le 2$
+  \end{enumerate} 
+  
+    %\item 正則写像$f : \D \rightarrow \D$について$|f' (0)| \le 1 - |f(0)|^2$を示せ.
+
+
+%\item  次の問いに答えよ. 
+%\begin{enumerate}
+%\setlength{\parskip}{0cm} 
+ % \setlength{\itemsep}{0cm} 
+%\item 任意の$z \in \mathbb{H}$について, $f(z)=i$となる$\mathbb{H}$の正則自己同型$f$が存在すること示せ.  %$\mathbb{H}:=\{ z \in \C | {\rm Im}(z) >0\}$の正則自己同型を全て求めよ. また任意の$z \in \mathbb{H}$について, $f(z)=i$となる$\mathbb{H}$の正則自己同型$f$が存在すること示せ. (ヒント: \ref{HtoD}を用いる.)
+%\item $f(i)=i$となる$\mathbb{H}$の正則自己同型$f$を全て求めよ.
+%    \end{enumerate}
+\item  $^{*}$ 穴あき円板$\D^{*}=\{z \in \C | 0< |z| <1 \}$の正則自己同型を全て求めよ.  (ヒント: そのようなものは原点周りで有界である.)
+
+  
+
+  \item $f(z)$は$\D$上で正則かつ$\bar{\D}$上で連続な関数とする. $f(0)=0$であり, $0 < |z| \le 1$について$f(z) \neq 0$, $|z|=1$について$|f(z)|=1$を満たすとする． このときある$|a|=1$となる$a \in \C$と自然数$m$があって$f(z)=az^m$とかけることを示せ．
+  
+  \item $f(\alpha)=\alpha$となる$\alpha$を$f$の不動点という. 次の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item 正則関数$f : \D \to \D$が2つの不動点を持つとき, $f(z)=z$となることを示せ．
+ \item 任意の正則関数$f : \D \to \D$は不動点を持つか?(ヒント: $\mathbb{H}$を考えよ.)
+      \end{enumerate} 
+      
+      \item $f$を$\D$上の正則関数とする. ある$0 < a<1$があって$\D$上で$|f(z)| <a$となるならば, 不動点が存在することを示せ.
+
+\newpage
+
+  
+\item $D$を原点を含む有界領域とし, $f : D \rightarrow D$を$f(0)=0$となる正則写像とする.次の問いにこたえよ.
+     \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f_k:=\underbrace{f \circ \cdots \circ f}_{\text{$k$回}}$とするとき$f_{k}' (0) = (f'(0))^k$であることを示せ. 
+  \item $|f'(0)| \le 1$であることを示せ.  (ヒント: $|f_k|$は有界である.)
+    \end{enumerate} 
+  \item $^{*}$ 次の問いに答えよ.
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $z,w \in \D $と整数$ n \ge 2$について
+  $
+  |z^{n-1}+ z^{n-2}w + \cdots +w^{n-1}| \le n
+  $
+を示せ.
+  \item $f(z) = \sum_{n=0}^{\infty}a_n z^n$を$\D$上の正則関数とする. 
+  $a_1 \neq 0$かつ$\sum_{n=2}^{\infty}n|a_n| \le |a_1|$であるならば
+  $f $は$\D$上で単射であることを示せ.
+    \end{enumerate} 
+  
+
+
+   \item $^{*}$ $z, w \in \D$について
+   $$
+   \rho (z,w)= \left|\frac{z-w}{1 - \bar{w}z}\right|
+   $$
+   とおく. \footnote{擬-双曲的距離と呼ばれる}次の問いに答えよ. 
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の正則関数$f : \D \to \D$について$\rho(f(z), f(w)) \le \rho(z, w)$を示せ.
+  \item 任意の正則自己同型写像$f : \D \to \D$について$\rho(f(z), f(w)) = \rho(z, w)$を示せ. 
+   \item 任意の正則関数$f : \D \to \D$について,
+   $$
+   \frac{|f'(z)|}{1 - |f(z)|^2} \le    \frac{1}{1 - |z|^2} 
+   $$
+   であることを示せ(シュワルツ-ピックの補題と呼ばれる).
+           \end{enumerate} 
+
+\hspace{-12pt}
+以下の問題は第6回演習問題の内容である.\footnote{第6回の問題に入り切らなかったが, どうしても出したかったので出しておく.}
+ \item $^{*}$  $u : \D \rightarrow \R$を$C^{\infty}$級関数とする. $u$が\underline{劣調和関数}であるとは
+ 任意の$a \in \D$と$|a|+r <1$となる任意の$r>0$について, 
+ $$
+ u(a) \le \frac{1}{2 \pi} \int_{0}^{2 \pi}  u(a +  re^{i \theta})  d \theta
+ $$
+ が成り立つこととする. 次の問いに答えよ. 
+
+   \begin{enumerate}
+ \setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f$を$\D$上の正則関数とするとき, $ |f(z)|$は劣調和関数であることを示せ.  %\footnote{証明に際し, "ある不等式"を証明なしで用いて良い. }
+  \item 劣調和関数$u$が$\D$の内部で最大値を持つならば, 定数関数であることを示せ. (つまり最大値原理は正則よりも弱い条件で成り立つ.)
+      \end{enumerate}  
+   
+  \end{enumerate} 
+ 
+
+\newpage
+
+
+\begin{center}
+{\Large 8 原始関数の存在・単連結・リーマンの写像定理}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+以下断りがなければ, $\Omega$は$\C$の領域(連結開集合)とし, $\D=\{z \in \C |  |z| <1\}$とする. 
+
+\vspace{12pt}
+\hspace{-24pt}\underline{単連結に関する問題}
+\begin{enumerate}[label=\textbf{問}8.\arabic*]
+
+\item $^{\bullet}$ 単連結の定義を述べよ. また単連結な領域と単連結でない領域例をそれぞれ2つ挙げよ.\footnote{\ref{convex}を用いても良い. 正直言って今の段階では単連結領域は$\D$ぐらいしか出ない...}
+
+\item $\Omega_{1}, \Omega_{2}$を2つの同相な領域とする. $\Omega_{1}$が単連結ならば$\Omega_2$も単連結であることをしめせ.
+
+\item \label{convex} 「任意の$a, b \in \Omega$について$a$と$b$を結ぶ線分が$\Omega$に含まれる」領域$\Omega$は単連結であることを示せ. 
+
+\item $\{ \Omega_{n} \}_{n \in \N}$を$\Omega_n \subset \Omega_{n+1}$となる$\C$内の単連結な領域の族とする. このとき$\cup_{n \in \N}\Omega_{n}$は単連結であることを示せ. (ヒント: 各$\Omega_n$が開集合であることを用いる.)
+
+    
+    \item Chat GPTに「リーマンの写像定理に関する問題を教えて」と打ち込んで出てきた問題(a), 問題(b)を解け. なお問題文として破綻している可能性もある.
+    \vspace{-8pt}
+       \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 領域 $G=\{z\in \mathbb{C}: 1<|z|<2\}$ を単位円板 $\mathbb{D}$ に正則に写像するような双正則写像 $f:G\to \mathbb{D}$ を求めよ。ただし、単位円板上には値をとらないとする。
+  \item 領域 $G=\{z\in \mathbb{C}: |z-1|<1\}\cup \{z\in \mathbb{C}: |z+1|<1\}$ を上半平面 $\mathbb{H}$ に正則に写像するような双正則写像 $f:G\to \mathbb{H}$ を求めよ。ただし、上半平面上には値をとらないとする。
+      \end{enumerate} 
+
+  
+%問題(a), 問題(b)の主張は果たして正しいかどうか真偽を判定せよ. 
+  
+  
+%\footnote{各$\Omega_n$が開集合であることを用いる. 今回, 領域(連結開集合)でしか単連結を定義していないのでこのような問題になった. 一般に"各$\Omega_n$が開集合"という仮定がなければ, この主張には反例がある(余力があればその反例を挙げよ).} 
+
+%\item 正則関数$F : \C \rightarrow \C \setminus \{ 0\}$であって次を満たすものを一つ構成せよ.\begin{enumerate}\setlength{\parskip}{0cm} \setlength{\itemsep}{0cm} \item $F$は全射であり, 任意の$w \in \C \setminus \{ 0\}$について$F^{-1}(w)$は無限集合である.  \item 任意の$f : \C \rightarrow \C \setminus \{ 0\}$について, ある$g : \C \rightarrow \C$があって$F \circ g = f$となる.\end{enumerate} 
+
+%\vspace{12pt}
+\hspace{-36pt}\underline{原始関数に関する問題}
+
+
+\item $^{\bullet}$ 
+次の問いに答えよ.
+\vspace{-12pt}
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $\C \setminus \{ ( -\infty, 0]\}$上の正則関数$f(z)$で$f'(z) = \frac{1}{z}$となるものは存在することを示せ.
+\item $\C \setminus \{ 0\}$上の正則関数$f(z)$で$f'(z) = \frac{1}{z}$となるものは存在しないことを示せ.
+  \end{enumerate}
+
+\item $^{\bullet}$  $f(z)$を$\D$上の正則関数とする. $f$が零点を持たないとき, $f = h^7$となる$\D$上の正則関数が存在することを示せ.
+
+
+
+\item  $\C \setminus \{ 0\}$上の正則関数$( \frac{1}{z} + \frac{a}{z^3})e^z$が$\C \setminus \{ 0\}$上で原始関数を持つような定数$a$の値とそのときの原始関数を求めよ. 
+
+\item $\C \setminus \{ 0\}$上の正則関数$f$で$z^5 = f^7$となるものは存在しないことを示せ. 
+
+\item $\C$上の正則関数$f(z)$が$f(z+1)=f(z)$を満たすとき, ある$\C \setminus \{ 0\}$上の正則関数$g(w)$で$f(z) = g(e^{2 \pi i z})$となるものが存在することを示せ． 
+
+\item  $^{*}$ \label{inshi} $\D$上の単射な正則関数$f(z)$で$f(0)=0, f'(0)=1$を満たすもの全体の集合を$\mathcal{F}$とする. 
+次の問いに答えよ.
+\vspace{-8pt}
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 任意の$a \in \D$について, $g(z) = \frac{z}{(1 - az)^2}$は$\mathcal{F}$の元であることを示せ. またある$G \in \mathcal {F}$で$g(z^2) = (G(z))^2$となるものが存在することを示せ. 
+  \item 任意の$f \in \mathcal{F}$について$f(z^2) = (F(z))^2$となる$F \in \mathcal{F}$が存在することを示せ. 
+      \end{enumerate} 
+      
+ \item $^{*}$ (ケーべ 1/4 定理) 引き続き$\mathcal{F}$を\ref{inshi}のとおりとする. ケーべ1/4定理 「正則関数$f : \D \to \C$で$f(0)=0, f'(0)=1$かつ$f$が単射ならば, $D_{1/4}(0):=\{w \in \C : |w| <  1/4\} \subset f(\D)$である」を以下の手順で証明せよ.
+
+   \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item $h(z) = \frac{1}{z} + c_0 + c_1 z + \cdots$が$0 < |z|<1$上で正則かつ単射ならば$\sum_{n=1}^{\infty}n|c_n|^2 \le 1$を示せ. (ヒント: $h(D_{r}(0) \setminus \{ 0\})$の補集合の面積を計算し$r \to 1$とする)
+ \item $f\in \mathcal{F}$とする. $f(z) = z +a_2 z^2 + \cdots$とおくと$|a_2| \le 2$であることをしめせ.
+ また$|a_2|=2$であることは, $\theta \in \R$があって
+ $
+ f(z) = \frac{z}{(1 - e^{i \theta}z)^2}
+ $
+ となることと同値であることを示せ.(ヒント: \ref{inshi}(b)のような$F(z)$を取り, $\frac{1}{F}$に(a)を用いる)
+ \item $h(z) = \frac{1}{z} + c_0 + c_1 z + \cdots$が$0 < |z|<1$上で正則かつ単射で$\alpha,\beta$を値として取らない\footnote{$\alpha \not \in h(\D)$ということ.}ならば$|\alpha - \beta| \le 4$であることを示せ. (ヒント: $\frac{1}{h(z)-\alpha}$の2次の項をみる)
+ \item $f$が$\alpha$を値として取らないならば, $|\alpha | \ge\frac{1}{4}$を示せ. またケーべ1/4定理を示せ. (ヒント: $\frac{1}{f}$は0と$\frac{1}{\alpha}$を値として取らない.)
+\item  $G(z) = \frac{z}{(1 - z)^2}$とおくと$-\frac{1}{4} \not \in G(\D)$であることを示せ. これよりケーべ1/4定理の"1/4"は最良である.
+  \end{enumerate} 
+ 
+   
+
+%\vspace{12pt}
+\hspace{-36pt}\underline{リーマンの写像定理・モンテルの定理・フルビッツの定理}
+\item $^{\bullet}$ リーマンの写像定理の主張を述べよ.
+    
+ \item $^{\bullet}$ $\Omega$上の正則関数列$\{ f_{n}\}_{n=1}^{\infty}$と正則関数$f$とする. $f$は定数関数でないとし, $f_n$は$f$に$\Omega$の 任意のコンパクト集合上で一様収束すると仮定する. 
+「任意の$f_{n}$が$\Omega$内に零点を持たないならば, $f$もまた$\Omega$内に零点を持たないこと」を以下の手順で示せ. .\footnote{演習問題や講義で習った内容は証明なしで用いて良い. この問題は授業の内容の理解度を試せるので是非ともやってください.}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f(w)=0$となる$w \in \Omega$が存在するとする. このとき, $w \in\Omega$を含む円板$D \subset \Omega$で「$\bar{D} \subset \Omega$かつ$f$は$\bar{D} \setminus \{ w\}$上で零点を持たない」となるものが存在することを示せ. (ヒント: 零点の孤立 問3.8)
+  \item 上の$w, D$について, $L := \frac{1}{2 \pi i} \int_{\partial D}\frac{f'(z)}{f(z) - w} dz$とおく. $L$は1以上の整数であることを示せ. (ヒント: 偏角の原理 問4.8)
+  \item 上の$w, D$について, $L_{n} :=  \frac{1}{2 \pi i} \int_{\partial D}\frac{f_{n}'(z)}{f_{n}(z) - w} dz$とおく. $L_{n} \to L$ ($n \to + \infty$)であることを示せ (ヒント: ワイエルシュトラスの2重級数定理と問3.1)
+  \item $f(w)=0$となる$w \in \Omega$は存在しないことを示せ.
+ \end{enumerate} 
+    
+\item 次の問いに答えよ.
+\vspace{-12pt}
+ \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 同程度連続・一様有界・正規族の定義を述べよ.
+  \item アスコリ・アルツェラの定理を調べ, その主張を述べよ.
+  \item モンテルの定理とアスコリ・アルツェラの定理を比較せよ. 特にモンテルの定理の仮定とアスコリ・アルツェラの定理の仮定の違いは何か?
+    \end{enumerate} 
+
+\item $$\mathcal{F} := \left\{ f(z) = \sum_{n=0}^{\infty}a_n z^n | \text{$f$は$|a_n| \le n$となる$\D$上の正則関数}\right\}$$
+は正規族であることを示せ.
+  
+%  \item (等角写像) 正則関数は角度を保つ性質がある. この問題はそのことを見る問題である.
+  
+% \item  (シュバルツ・クリストフェル積分) リーマンの写像定理によって, 四角形の内部$(0,1)\times (0,1) \subset \C$を上半平面$\mathbb{H}$に移す正則な全単射が存在する. この正則な全単射はどのような形なのだろうか? 次の問いに答えよ.
+ 
+ 
+   \end{enumerate}
+  
+ 
+\newpage
+
+
+\begin{center}
+{\Large 9 補足資料}
+\end{center}
+
+\begin{flushright}
+ 岩井雅崇 2023/05/23
+\end{flushright}
+
+\vspace{12pt}
+\hspace{-24pt}\underline{勉強の方法(の一例)}
+
+複素解析続論は難しい内容が多いので, 理解するのが難しいと思います. (楕円関数以後の内容は特に.)
+何から始めていいかわからない人は以下の順番で勉強してもらえば幸いです. 
+
+       \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+    \item 第1-4回の演習問題のうち$^{\bullet}$問題は何も見ずに解けるようにしておく.  これができない人は前期の複素解析から復習するようにしてください. これはできないとまずいです.
+  \item 第5-8回の演習問題で (ノート・教科書・参考書を見ながら)$^{\bullet}$問題を解く. この問題がほぼ全てできていれば, (問題が解けるかはわからないが)複素解析続論を半分くらい理解している方だと思います. 第5回(楕円関数)以後の演習問題の$^{\bullet}$問題を解くのは, はじめのうちは苦労するかもしれません.
+      \item 第1-4回の演習問題のうち6-8割くらい解けるようになる. 実際第1-4回の演習問題は大学院の院試も含むので, これを理解している人は前期の複素解析をきちんと理解していると言えます.
+      \item  第5-8回の演習問題をできるだけ頑張って解く. ただし私が適当に作ったものもあるので, 全て解こうとは思わないでください.  6割くらい解けている人はかなり理解している人だと思います. \footnote{実際, 第5回以後の内容は難しいと思います. 私が学生だったとして7-8割解けるかは怪しいです. 私が学生だったとしても第1-4回の演習問題はほぼ解けていたと思いますが...(本当か?)}
+  \end{enumerate}
+  
+  \vspace{12pt}
+\hspace{-24pt}\underline{演習でできなかった内容}
+
+以下は演習に盛り込めなかった内容です. 参考書のAhlforsやStein-Shakarchiに詳しい内容が載っております.\footnote{Ahlforsはいい本だけどかなり読みづらい! Stein-Shakarchiは演習問題を作る際に参考にしました. かなりいい本だと思います.} 
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item $f' \neq 0$なる1:1正則関数は等角写像(角度を保つ写像)である
+  \item $\mathbb{H}$を長方形に移す全単射正則写像の形(シュバルツ・クリストフェルの定理)
+  \item ゼータ関数の解析接続・自明な零点. 整数論との関連話題.
+  \end{enumerate}
+
+
+
+\vspace{12pt}
+\hspace{-24pt}\underline{複素解析の内容}
+
+演習問題を作っていて気づいたのですが, 複素解析続論の内容はいろんな分野に広がりを持ちます.\footnote{教員の立場で演習問題を作っていてこのことを思い知らされました. 学生のときはよくわからないような...}
+ここでは今後どういう内容があるかをざっくばらんに言っていきます(結構適当なんで合っているかは怪しいところもあります.)
+
+\vspace{12pt}
+楕円関数・楕円曲線
+
+    \begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 楕円曲線の有理点 (数論)
+  \item 楕円曲線のモジュライ(トポロジーならタイヒミュラー理論) %代数幾何ならばモジュライ理論?(Deligne-Mumford stackとか?))
+  \item 複素構造と$C^\infty$級構造の違い→小平・スペンサーの変形理論(複素幾何学・代数幾何学)
+  \item 楕円曲線は$\mathbb{C}\mathbb{P}^2$の3次曲線→代数幾何学
+  \item $j$不変量とモンスター群→頂点作用素代数(表現論・作用素環論?)\footnote{確か同期(Yuto Moriwaki at [RIKEN])がこの分野をやっていて, 物理とかも普通に関わるらしい.}
+  \end{enumerate}
+
+   
+シュワルツの補題
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item Yauのシュワルツの補題・双正則断面曲率(微分幾何) %正則断面曲率が負の多様体 (Wu-Yauの定理) (複素微分幾何)
+ \item 小林双曲性・Brody双曲性 (複素幾何)
+   \end{enumerate}
+   
+   劣調和函数
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+ \item 多重劣調和函数・岡潔の理論 (多変数複素解析)
+ \item 特異エルミート計量 (複素代数幾何学) \footnote{一応私の専門分野です...}
+   \end{enumerate}
+   
+リーマンの写像定理
+
+\begin{enumerate}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 領域・境界対応 CR多様体 
+  \item 等角写像→共形幾何学?
+   \end{enumerate}
+   
+   \vspace{12pt}
+\hspace{-24pt}\underline{気になる方は...}
+
+次の本は数学の広い領域に渡り専門的な内容について書かれている本です. 自分の分野を決める際の参考にしてください. 
+%そろそろ分野とか決めるのに気になっている方は次の本を見てみてはいかがでしょうか.
+
+\begin{itemize}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+\item 東京大学出版会  「数学の現在$i$」「数学の現在$\pi$」「数学の現在$e$」
+   \end{itemize}
+また次の本は非常に有益で若いうちから読んでおいた方が良いと思います. 
+\begin{itemize}
+\setlength{\parskip}{0cm} 
+  \setlength{\itemsep}{0cm} 
+  \item 伊原 康隆 「志学数学 -研究の諸段階 発表の工夫-」
+   \end{itemize}
+良い本なのでいろんな人に勧めてください.\footnote{東大の河東先生の書評も面白い. 「今すぐこの本を買ってきて読みなさい」と書いてある.}
+
+
+ \vspace{11pt}\begin{wrapfigure}{r}[0pt]{0.2\textwidth}  \centering\includegraphics[height=20mm, width=20mm]{complex.png}\end{wrapfigure}
+
+演習の問題は授業ページ(\url{https://masataka123.github.io/2023_summer_complex/})にもあります. 右下のQRコードからを読み込んでも構いません.
+
+
+  
+
+
+
+  
+  
+ \end{document}
