@@ -72,6 +72,8 @@
 
 - 第6回 (2023/05/23). 楕円関数 [第5回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/5_楕円関数.pdf)
 
+(2023/05/30 訂正 問題5.16で"\omega_1, \omega_2"を"1,\tau"に訂正しました.)
+
 <u>残っている問題: 問5.1-5.18</u>
 
 - 第7回 (2023/05/30). 最大値原理・開写像定理 [第6回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/6_最大値原理_開写像定理.pdf)
@@ -81,6 +83,8 @@
 - (2023/06/06). 休講(予定)
 
 - 第8回 (2023/06/13). シュワルツの補題 [第7回演習問題](https://github.com/masataka123/2023_summer_complex/blob/master/material/7_シュワルツの補題.pdf)
+
+(2023/05/30 訂正 問題7.3(a)で"≤"を"<"に訂正しました.)
 
 <u>残っている問題: 問7.1-7.13</u>
 

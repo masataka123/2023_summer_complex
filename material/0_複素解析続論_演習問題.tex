@@ -694,10 +694,10 @@ $$ g_2(\tau) = 60\sum_{(m,n) \in \Z^2 \setminus \{ (0,0)\} }\frac{1}{(m+ n \tau)
  $$M = \{ (x:y:z) \in \C \mathbb{P}^2 | y^2z = 4x^3 - g_2 x z^2- g_3 z^3 \}$$とおくとき, 次の問いに答えよ. 
  \begin{enumerate}
 %\item $g_{2}^{3} - 27 g_{3}^{2} = 16\prod_{1 \le i< j \le 3}(e_i - e_j)^2 \neq 0$をしめせ. (これより$M$が複素多様体になる. )
-\item  同相写像$f: \C/\Z  \omega_1 + \Z \omega_2 \rightarrow  M$を一つ構成せよ.
+\item  同相写像$f: \C/\Z  + \Z \tau \rightarrow  M$を一つ構成せよ.
 \footnote{自然に構成していればこれは双正則になる. つまり$\C/\Z+ \Z \tau $から$\C \mathbb{P}^2$への正則埋め込みを具体的に記述したことになる. 専門的な用語で言うと「$3P$がvery ampleである」}
 \footnote{難しければ$f: (\C/\Z  + \Z \tau) \setminus \{ 0\} \rightarrow  M \setminus \{ (0 : 1: 0)\}$なる同相写像でも良い.}
-\item $\wp : \C/(\Z  \omega_1 + \Z \omega_2) \setminus  \{ 0\}\rightarrow \C $を考える. ある$\C$の3点$\alpha_1,\alpha_2,\alpha_3$を除いて, $\wp^{-1}(w)$の個数は2であることを示せ. またある3点$\alpha_1,\alpha_2,\alpha_3$を求めよ.\footnote{本当は$\wp : \C/(\Z  \omega_1 + \Z \omega_2) \to \C\mathbb{P}^1$にすれば$\C\mathbb{P}^1$の$\infty$に対応する点も"例外"になり, 全4点が変な点となっていることがわかる. なぜ4点なのかは, リーマン・フルビッツの定理から出る. なおこの写像は$M \to \C\mathbb{P}^1$ $(x:y:z) \mapsto (x:z)$に"ほぼ"対応する.(ただし$(0:1:0)$だけ$(1:0)$に送るようにする.) この場合にも変な点4点を全て決定してみよ.} 
+\item $\wp : \C/(\Z  + \Z \tau) \setminus  \{ 0\}\rightarrow \C $を考える. ある$\C$の3点$\alpha_1,\alpha_2,\alpha_3$を除いて, $\wp^{-1}(w)$の個数は2であることを示せ. またある3点$\alpha_1,\alpha_2,\alpha_3$を求めよ.\footnote{本当は$\wp : \C/(\Z  + \Z \tau) \to \C\mathbb{P}^1$にすれば$\C\mathbb{P}^1$の$\infty$に対応する点も"例外"になり, 全4点が変な点となっていることがわかる. なぜ4点なのかは, リーマン・フルビッツの定理から出る. なおこの写像は$M \to \C\mathbb{P}^1$ $(x:y:z) \mapsto (x:z)$に"ほぼ"対応する.(ただし$(0:1:0)$だけ$(1:0)$に送るようにする.) この場合にも変な点4点を全て決定してみよ.} 
 \item $\lambda = \frac{e_3 - e_2}{e_1 - e_2}$とおく. \ref{j_invariant}の$j$不変量は, ある実数$c \in \R$があって
 $$
 j(\tau ) = c \frac{(1 - \lambda + \lambda^2)^3}{\lambda^2 (1 - \lambda)^2}
@@ -938,7 +938,7 @@ $f : M\to N$が正則な全単射であるとき, \underline{双正則写像}と
   \begin{enumerate}
 \setlength{\parskip}{0cm} 
   \setlength{\itemsep}{0cm} 
-  \item $z \in \mathbb{H}$について$|\Psi(z)| \le 1$であることを示せ.
+  \item $z \in \mathbb{H}$について$|\Psi(z)| < 1$であることを示せ.
   \item $\Psi(z)$は$\Psi :  \mathbb{H} \to \D$となる正則な全単射であることを示せ. (ヒント: 逆写像$\Phi : \D \to \mathbb{H}$は$\Phi(z)=\frac{iz + i}{-z +1}$である(なぜか?))
   \end{enumerate}
   
